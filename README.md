@@ -16,7 +16,69 @@
 Este sistema é disponibilizado como um Software como Serviço (SaaS), permitindo acesso remoto e flexibilidade para os usuários. O sistema apresenta um design intuitivo e amigável, levando em consideração diferentes níveis de conhecimento dos usuários. A implementação do ERP pode ser feita de forma gradual, permitindo que a empresa se ajuste à nova tecnologia à medida que os módulos são implementados, evitando interrupções nas operações diárias.</p>
 
 # Documentação
-![Diagrama de entidade relacional]https://github.com/xandegrawe/LeGraTech/blob/main/c4model01.png
+<h3>Diagrama Entidade Relacional</h3>
+
+![](https://github.com/xandegrawe/LeGraTech/blob/main/entidade%20relacional.png)
+
+---
+<h3>Diagrama de Caso de Uso</h3>
+
+![](https://github.com/xandegrawe/LeGraTech/blob/main/casosdeuso.png)
+
+<h3>Requisitos Funcionais</h3>
+
+**RF001** - O sistema deve permitir o cadastro de informações detalhadas sobre clientes, incluindo nome, endereço, contato e informações de contato.
+
+**RF002** - Deve ser possível registrar informações específicas dos fornecedores, como nome da empresa, tipo de fornecimento e detalhes de contato.
+
+**RF003** -  Deve ser possível adicionar notas ou anotações relacionadas a clientes e fornecedores para referência futura.
+
+**RF004** - Deve ser possível vincular transações financeiras (pagamentos, compras etc.) aos registros de clientes e fornecedores.
+
+**RF005** -  O sistema deve permitir o registro de transações financeiras, incluindo receitas e despesas.
+
+**RF006** - Deve ser possível categorizar as transações por tipo (ex.: venda, pagamento, compra) e atribuir valores monetários.
+
+**RF007** - O software deve calcular automaticamente totais de transações e manter um saldo atualizado.
+
+**RF008 -** Deve ser possível gerar relatórios financeiros detalhados, incluindo balanços, demonstrativos de resultados e fluxos de caixa.
+
+**RF009** - Deve ser possível configurar alertas para pagamentos pendentes e vencimentos
+
+**RF010** - O sistema exige que os usuários façam login com credenciais válidas para acessar suas funcionalidades, garantindo a segurança dos dados
+
+
+<h3>Requisitos Não Funcionais</h3>
+
+**RNF001** - A interface do usuário deve ser intuitiva e de fácil navegação.
+
+**RNF002** - ****O sistema deve ser compatível com diferentes dispositivos e navegadores**.**
+
+**RNF003** - ****O software deve garantir a segurança dos dados pessoais e financeiros**.**
+
+**RNF004** - O tempo de resposta das consultas e geração de relatórios deve ser rápido.
+
+**RNF005** - O sistema deve ser escalável para acomodar um aumento no número de registros e transações.
+
+**RNF006** - O software deve oferecer uma interface para visualizar, editar e atualizar os registros de clientes e fornecedores.
+
+---
+
+<h2>C4 Model</h2>
+
+![](https://github.com/xandegrawe/LeGraTech/blob/main/c4model01.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/c4model02.png)
+
+---
+
+<h3>Diagrama de Arquiterura de Software</h3>
+
+
+![](https://github.com/xandegrawe/LeGraTech/blob/main/mvc.png)
+
+<p>MVC com padrão repository</p>
+
+---
 
 # Stack
 <h3>Backend</h3>
@@ -38,3 +100,6 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 <h3>Infraestrutura</h3>
 
 - CI/CD do GitHub Actions
+
+# Acompanhe o projeto
+[Kanban / Projeto](https://github.com/users/xandegrawe/projects/1/views/1)
