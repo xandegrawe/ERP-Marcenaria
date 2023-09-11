@@ -16,7 +16,7 @@
 Este sistema é disponibilizado como um Software como Serviço (SaaS), permitindo acesso remoto e flexibilidade para os usuários. O sistema apresenta um design intuitivo e amigável, levando em consideração diferentes níveis de conhecimento dos usuários. A implementação do ERP pode ser feita de forma gradual, permitindo que a empresa se ajuste à nova tecnologia à medida que os módulos são implementados, evitando interrupções nas operações diárias.</p>
 
 # Documentação
-<h2>Diagrama de entidade relacional</h2>
+![Diagrama de entidade relacional]https://github.com/xandegrawe/LeGraTech/blob/main/c4model01.png
 
 # Stack
 <h3>Backend</h3>
