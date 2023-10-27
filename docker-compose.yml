@@ -6,7 +6,6 @@ services:
     tty: true
     environment:
       - CHOKIDAR_USEPOLLING=true
-    command: bash -c "npm i && npm run dev"
     volumes:
       - ./front-end:/front-end
     ports:
@@ -26,9 +25,9 @@ services:
   backend_rails_api:
     container_name: rails_api
     build: ./backend
-    command: bash -c "cd rails-api && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "cd backend && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/usr/src/rails-api
+      - .:/usr/src/backend
     expose:
       - "3000"
     ports:
