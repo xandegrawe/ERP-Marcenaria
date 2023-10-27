@@ -18,12 +18,12 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 # Documentação
 <h3>Diagrama Entidade Relacional</h3>
 
-![](https://github.com/xandegrawe/LeGraTech/blob/main/entidade%20relacional.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/entidade%20relacional.png)
 
 ---
 <h3>Diagrama de Caso de Uso</h3>
 
-![](https://github.com/xandegrawe/LeGraTech/blob/main/casosdeuso.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/casosdeuso.png)
 
 <h3>Requisitos Funcionais</h3>
 
@@ -66,15 +66,15 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 
 <h2>C4 Model</h2>
 
-![](https://github.com/xandegrawe/LeGraTech/blob/main/c4model01.png)
-![](https://github.com/xandegrawe/LeGraTech/blob/main/c4model02.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/c4model01.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/c4model02.png)
 
 ---
 
 <h3>Diagrama de Arquiterura de Software</h3>
 
 
-![](https://github.com/xandegrawe/LeGraTech/blob/main/mvc.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/mvc.png)
 
 <p>MVC com padrão repository</p>
 
