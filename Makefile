@@ -7,7 +7,11 @@ bash:
 
 frontend:
 	sudo docker start react_front_end
-	sudo docker compose -f docker-compose.yml exec react_front_end /bin/bash	
+	sudo docker compose -f docker-compose.yml exec react_front_end /bin/bash
+
+backend:
+	sudo docker start backend_rails_api
+	sudo docker compose -f docker-compose.yml exec backend_rails_api /bin/bash
 
 build:
 	sudo docker compose -f docker-compose.yml build

@@ -4,11 +4,11 @@ RUN apt-get update -qq && apt-get install -y build-essential nodejs npm libpq-de
 
 RUN npm install -g yarn
 
-RUN mkdir /usr/src/rails-api
+RUN mkdir /usr/src/backend
 
-WORKDIR /usr/src/rails-api
+WORKDIR /usr/src/backend
 
-ADD . /usr/src/rails-api
+ADD . /usr/src/backend
 
 RUN gem install rails -v 7.0.4
 

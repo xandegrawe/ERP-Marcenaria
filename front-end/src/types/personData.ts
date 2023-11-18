@@ -1,10 +1,19 @@
 export type PersonData = {
+  id: number;
   name: string;
+  last_name?: string;
   email?: string;
-  address?: string;
+  city?: string;
+  state?: string;
+  neighborhood?: string;
+  street?: string;
+  number?: string;
+  observation?: string;
+  cep?: string;
   phone?: string;
-  CNPJ?: string;
-  CPF?: string;
+  cnpj?: string;
+  cpf?: string;
+  rg?: string;
 };
 
 export type PeopleTableProps = {

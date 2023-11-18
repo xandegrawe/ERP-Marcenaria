@@ -1,13 +1,30 @@
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-import PeopleRegisterForm from 'components/form/PeopleRegisterForm'
-import React from 'react'
+import { Button, Modal, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import CustomerRegisterForm from 'components/form/CustomerRegisterForm'
+import ProviderRegisterForm from 'components/form/ProviderRegisterForm'
+import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 
-export default function AddRegisterModal () {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+type AddRegisterModalProps = {
+  route: { path: string }
+}
 
+export default function AddRegisterModal({ route }: AddRegisterModalProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+  
+  const getComponentByRoute = (route: string) => {
+    if (route.includes('/customers')) {
+      return (
+        <CustomerRegisterForm onClose={onClose}/>
+      );
+    } else if (route.includes('/providers')) {
+      return (
+        <ProviderRegisterForm />
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -29,16 +46,7 @@ export default function AddRegisterModal () {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Adicione um novo Cliente</ModalHeader>
-          <ModalBody pb={6}>
-            <PeopleRegisterForm />
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='green' mr={3}>
-              Salvar
-            </Button>
-            <Button onClick={onClose} variant='outline' colorScheme='red'>Cancelar</Button>
-          </ModalFooter>
+          {getComponentByRoute(route.path)}
         </ModalContent>
       </Modal>
     </>

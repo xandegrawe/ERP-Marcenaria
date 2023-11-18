@@ -16,7 +16,7 @@ export default function Dashboard(props: { [x: string]: any }) {
 	const [ toggleSidebar, setToggleSidebar ] = useState(false);
 	// functions for changing the states from components
 	const getRoute = () => {
-		return window.location.pathname !== '/admin/full-screen-maps';
+		return window.location.pathname !== 'legratech/admin/full-screen-maps';
 	};
 	const getActiveRoute = (routes: RoutesType[]): string => {
 		let activeRoute = 'Default Brand Text';

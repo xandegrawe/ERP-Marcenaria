@@ -3,28 +3,30 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 import PeopleTable from 'components/tables/PeopleTable';
 import { PersonData } from 'types/personData';
+import { useEffect, useState } from 'react';
+import { listProvidersApi } from 'services/api';
 
-function SuppliersTable() {
-  const peopleData = [
-    { name: "Fornecedor 01", address: "Rua João Marciano Pereira", phone: "(47) 912345678", CNPJ: "123456789" },
-    { name: "Fornecedor 02", address: "Rua Pedra da Lua", phone: "(47) 912345678", CNPJ: "123456789" },
-    { name: "Fornecedor 03", address: "Rua W11", phone: "(47) 912345678", CNPJ: "123456789" },
-    { name: "Fornecedor 04", address: "Rua quatro", phone: "(47) 912345678", CNPJ: "123456789" },
-  ];
+export default function ProvidersTable() {
+  const [providerData, setProviderData] = useState<PersonData[]>([]);
 
-  const tableColumns = ["Nome", "Endereço", "Telefone", "CNPJ", "Ações"];
+  useEffect(() => {
+    listProvidersApi().then(response => {
+      setProviderData(response.data);
+    })
+  }, [])
+  
+  const tableColumns = ["Nome", "Telefone", "CNPJ", "Ações"];
 
 // Mapeie o nome da coluna para a chave do objeto
 const columnKeyMapping: Record<string, keyof PersonData> = {
   "Nome": "name",
-  "Endereço": "address",
   "Telefone": "phone",
-  "CNPJ": "CNPJ",
+  "CNPJ": "cnpj",
 };
 
 return (
   <PeopleTable
-    peopleData={peopleData} 
+    peopleData={providerData} 
     tableColumns={tableColumns}
     renderCustomColumn={(person, column) => {
       if (column === "Ações") {
@@ -47,4 +49,4 @@ return (
 );
 }
 
-export default SuppliersTable;
+;

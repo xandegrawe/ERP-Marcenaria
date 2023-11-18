@@ -15,12 +15,12 @@ function PeopleTable({ peopleData, tableColumns, renderCustomColumn }: PeopleTab
   let tableBg = useColorModeValue('white', 'navy.800');
 
   return (
-    <TableContainer borderRadius='15px'>
+    <TableContainer borderRadius='15px' marginTop={"1%"}>
       <Table variant='simple' size='md' backgroundColor={tableBg} boxShadow='0px 0px 10px rgba(0, 0, 0, 0.25)'>
-        <Thead marginTop={'15px'}>
+        <Thead>
           <Tr>
             { tableColumns.map((column, index) => (
-              <Th key={index} fontSize={'md'}>
+              <Th key={index} fontSize={'md'} pl={10} >
                 {column}
               </Th>
               ))
@@ -29,9 +29,9 @@ function PeopleTable({ peopleData, tableColumns, renderCustomColumn }: PeopleTab
         </Thead>
         <Tbody>
           {peopleData.map((person, index) => (
-            <Tr key={index} textAlign={'center'}>
+            <Tr key={index} >
               {tableColumns.map((column, columnIndex) => (
-                <Td key={columnIndex} textAlign={'center'}>
+                <Td key={columnIndex} textAlign="center">
                   {renderCustomColumn(person, column)}
                 </Td>
               ))}
