@@ -20,7 +20,7 @@ function PeopleTable({ peopleData, tableColumns, renderCustomColumn }: PeopleTab
         <Thead>
           <Tr>
             { tableColumns.map((column, index) => (
-              <Th key={index} fontSize={'md'} pl={10} >
+              <Th key={index} fontSize={'md'} pl={10}>
                 {column}
               </Th>
               ))
@@ -28,8 +28,8 @@ function PeopleTable({ peopleData, tableColumns, renderCustomColumn }: PeopleTab
           </Tr>
         </Thead>
         <Tbody>
-          {peopleData.map((person, index) => (
-            <Tr key={index} >
+          {peopleData.map((person) => (
+            <Tr key={person.id}>
               {tableColumns.map((column, columnIndex) => (
                 <Td key={columnIndex} textAlign="center">
                   {renderCustomColumn(person, column)}

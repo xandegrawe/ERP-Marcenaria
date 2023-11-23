@@ -1,6 +1,6 @@
 import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import CustomerEditRegisterForm from 'components/form/CustomerEditRegisterForm'
-import ProviderRegisterForm from 'components/form/ProviderRegisterForm'
+import ProviderEditRegisterForm from 'components/form/ProviderEditRegisterForm'
 import React, { useState } from 'react'
 import { FaEdit, FaPlus } from 'react-icons/fa'
 import { PersonData } from 'types/personData'
@@ -20,7 +20,7 @@ export default function EditRegisterModal({ route, personData}: EditRegisterModa
       );
     } else if (route.includes('/providers')) {
       return (
-        <ProviderRegisterForm />
+        <ProviderEditRegisterForm  onClose={onClose} initialValues={personData}/>
       );
     }
     return null;

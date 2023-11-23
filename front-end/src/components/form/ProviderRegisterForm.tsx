@@ -1,15 +1,17 @@
 import { PhoneIcon } from '@chakra-ui/icons';
-import { Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalHeader, SimpleGrid, Textarea, useColorModeValue, useDisclosure} from '@chakra-ui/react'
+import { Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useDisclosure, useToast} from '@chakra-ui/react'
+import { ProviderContext } from 'contexts/Providers/ProviderContext';
+import { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { createProviderApi } from 'services/api';
 import { PersonData } from 'types/personData';
-type ProviderRegisterFormProps = {
-  setData: (data: PersonData) => void;
-};
 
-export default function ProviderRegisterForm() {
-  const { onClose } = useDisclosure()
+export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosureReturn['onClose'] }) {
+
   let textInputColor = useColorModeValue('gray.700', 'white');
+  const toast = useToast()
+  const { register, setValue, setFocus, handleSubmit} = useForm();
+  const { addProvider } = useContext(ProviderContext);
 
   const checkCEP = (e: { target: { value: string; }; }) => {
     const cep = e.target.value.replace(/\D/g, '');
@@ -23,44 +25,34 @@ export default function ProviderRegisterForm() {
     }).catch((err) => console.log(err));
   }
 
-  const { register, setValue, setFocus, handleSubmit} = useForm();
-
-  // const onSubmit = async (data: PersonData) => {
-  //   try {
-  //     const personData = {
-  //       id: data.id,
-  //       name: data.name,
-  //       email: data.email,
-  //       phone: data.phone,
-  //     };
-
-  //     const providerData = {
-  //       cnpj: data.cnpj,
-  //     };
-
-  //     const addressData = {
-  //       city: data.city,
-  //       state: data.state,
-  //       neighborhood: data.neighborhood,
-  //       street: data.street,
-  //       number: data.number,
-  //       observation: data.observation,
-  //       cep: data.cep,
-  //     };
-  //     await createProviderApi(personData, providerData, addressData);
-  //     onClose();
-  //     setData(data);
-  //   } catch (error) {
-  //     console.error('Erro ao criar o cliente:', error);
-  //   }
-  // };
+  const onSubmit = async (data: Partial<PersonData>) => {
+    try {
+      const response = await createProviderApi(data);
+      const newCustomer = response.data;
+      addProvider(newCustomer);
+      toast({
+        title: "Cliente criado com sucesso!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Erro ao criar cliente!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <>
       <ModalHeader>Adicione um novo Fornecedor</ModalHeader>
       <ModalBody pb={6}>
         <Container>
-          <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <SimpleGrid columns={2} spacing={10}>
             <FormControl>
                 <FormLabel>Nome</FormLabel>
@@ -100,12 +92,18 @@ export default function ProviderRegisterForm() {
                 <Input marginTop={'10px'} placeholder='Rua' color={textInputColor} {...register('street')}/>
                 <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('addressNumber')}/>
               </FormControl>
+
             </SimpleGrid>
 
             <FormControl mt={6}>
               <FormLabel>Observações</FormLabel>
               <Textarea placeholder='Deixe uma observação' {...register('observation')} />
             </FormControl>
+
+            <ModalFooter>
+              <Button type="submit" colorScheme='green' mr={3}>Salvar</Button>
+              <Button onClick={onClose} variant='outline' colorScheme='red'>Cancelar</Button>
+            </ModalFooter>
           </form>
         </Container>
       </ModalBody>

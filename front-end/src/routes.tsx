@@ -11,6 +11,8 @@ import SignInCentered from 'views/auth/signIn';
 import CashFlow from 'views/admin/cashFlow';
 import { FaBoxes } from 'react-icons/fa';
 import People from 'views/admin/people_register';
+import { CustomerProvider } from 'contexts/Customers/CustomerContext';
+import AddRegisterModal from 'components/modal/AddRegisterModal';
 
 const routes = [
 	{
@@ -33,14 +35,14 @@ const routes = [
 		layout: '/admin',
 		icon: <Icon as={MdSupervisorAccount} width='20px' height='20px' color='inherit' />,
 		path: '/customers',
-		component: () => <People route={{ path: '/customers' }} />
+		component: () => <CustomerProvider> <People route={{ path: '/customers' }} /> </CustomerProvider>
 	},
 	{	
 		name: 'Fornecedores',
 		layout: '/admin',
 		icon: <Icon as={FaBoxes} width='20px' height='20px' color='inherit' />,
 		path: '/providers',
-		component: () => <People route={{ path: '/providers' }} />
+		component: () => <CustomerProvider> <People route={{ path: '/providers' }} />  </CustomerProvider>
 	},
 	{
 		name: 'Perfil',
@@ -49,13 +51,13 @@ const routes = [
 		icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
 		component: Profile
 	},
-	{
-		name: 'Sign In',
-		layout: '/auth',
-		path: '/sign-in',
-		icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-		component: SignInCentered
-	},
+	// {
+	// 	name: 'Sign In',
+	// 	layout: '/auth',
+	// 	path: '/sign-in',
+	// 	icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+	// 	component: SignInCentered
+	// },
 ];
 
 export default routes;
