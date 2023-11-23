@@ -1,27 +1,25 @@
 import { PhoneIcon } from '@chakra-ui/icons';
-import {Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalCloseButton, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue } from '@chakra-ui/react'
+import {Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalCloseButton, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useToast } from '@chakra-ui/react'
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { getFullPersonDataApi, updateCustomerApi } from 'services/api';
+import { getFullCustomerPersonDataApi, updateCustomerApi } from 'services/api';
 import { PersonData } from 'types/personData';
 type FormProps = {
   initialValues: PersonData;
   onClose: UseDisclosureReturn['onClose'];
 };
 export default function CustomerEditRegisterForm({ initialValues, onClose }: FormProps) {
+  const toast = useToast()
   const id = initialValues.id;
   const { register, setValue, setFocus, handleSubmit} = useForm();
 
   useEffect(() => {
     const fetchCustomerData = async () => {
-      console.log(id);
-      console.log('passou aqui');
       if (id) {
-        const customerData = await getFullPersonDataApi(Number(id));
+        const customerData = await getFullCustomerPersonDataApi(Number(id));
         let customer = customerData.data.customer;
         let person = customerData.data.person;
         let customer_address = customerData.data.address;
-        console.log(customer);
         setValue('name', person.name);
         setValue('email', person.email);
         setValue('phone', person.phone);
@@ -56,12 +54,22 @@ export default function CustomerEditRegisterForm({ initialValues, onClose }: For
   }
 
   const onSubmit = async (data: Partial<PersonData>) => {
-    console.log(data);
     try {
       await updateCustomerApi(id, data);
+      toast({
+        title: "Cliente atualizado com sucesso!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       onClose();
     } catch (error) {
-      console.error('Erro ao criar o cliente:', error);
+      toast({
+        title: "Erro ao atualizar cliente!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
