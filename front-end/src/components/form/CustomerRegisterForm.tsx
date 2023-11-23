@@ -1,6 +1,6 @@
 import { PhoneIcon } from '@chakra-ui/icons';
 import {Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useToast } from '@chakra-ui/react'
-import { CustomerContext } from 'contexts/Customers/CustomerContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { createCustomerApi } from 'services/api';
@@ -10,7 +10,7 @@ export default function CustomerRegisterForm({ onClose }: { onClose: UseDisclosu
   let textInputColor = useColorModeValue('gray.700', 'white');
   const toast = useToast()
   const { register, setValue, setFocus, handleSubmit} = useForm();
-  const { addCustomer } = useContext(CustomerContext);
+  const { addCustomer } = useContext(GlobalContext);
   
 
   const checkCEP = (e: { target: { value: string; }; }) => {

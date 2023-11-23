@@ -2,8 +2,6 @@
 import { Box, SimpleGrid } from '@chakra-ui/react';
 import CustomerTable from './components/CustomersTable';
 import ProvidersTable from './components/ProvidersTable';
-import { CustomerProvider } from 'contexts/Customers/CustomerContext';
-
 type PeopleProps = {
   route: { path: string };
 };

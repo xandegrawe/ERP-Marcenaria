@@ -1,6 +1,6 @@
 import { PhoneIcon } from '@chakra-ui/icons';
 import { Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useDisclosure, useToast} from '@chakra-ui/react'
-import { ProviderContext } from 'contexts/Providers/ProviderContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 import { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { createProviderApi } from 'services/api';
@@ -11,7 +11,7 @@ export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosu
   let textInputColor = useColorModeValue('gray.700', 'white');
   const toast = useToast()
   const { register, setValue, setFocus, handleSubmit} = useForm();
-  const { addProvider } = useContext(ProviderContext);
+  const { addProvider } = useContext(GlobalContext);
 
   const checkCEP = (e: { target: { value: string; }; }) => {
     const cep = e.target.value.replace(/\D/g, '');

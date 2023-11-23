@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-route
 import { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 import AddRegisterModal from 'components/modal/AddRegisterModal';
-import { CustomerProvider } from 'contexts/Customers/CustomerContext';
 export default function AdminNavbar(props: {
 	secondary: boolean;
 	message: string|boolean;

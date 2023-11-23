@@ -11,8 +11,7 @@ import SignInCentered from 'views/auth/signIn';
 import CashFlow from 'views/admin/cashFlow';
 import { FaBoxes } from 'react-icons/fa';
 import People from 'views/admin/people_register';
-import { CustomerProvider } from 'contexts/Customers/CustomerContext';
-import AddRegisterModal from 'components/modal/AddRegisterModal';
+import { GlobalProvider } from 'contexts/GlobalContext';
 
 const routes = [
 	{
@@ -35,14 +34,14 @@ const routes = [
 		layout: '/admin',
 		icon: <Icon as={MdSupervisorAccount} width='20px' height='20px' color='inherit' />,
 		path: '/customers',
-		component: () => <CustomerProvider> <People route={{ path: '/customers' }} /> </CustomerProvider>
+		component: () => <People route={{ path: '/customers' }} />
 	},
 	{	
 		name: 'Fornecedores',
 		layout: '/admin',
 		icon: <Icon as={FaBoxes} width='20px' height='20px' color='inherit' />,
 		path: '/providers',
-		component: () => <CustomerProvider> <People route={{ path: '/providers' }} />  </CustomerProvider>
+		component: () => <People route={{ path: '/providers' }} />
 	},
 	{
 		name: 'Perfil',

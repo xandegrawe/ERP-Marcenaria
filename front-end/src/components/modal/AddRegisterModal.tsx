@@ -1,8 +1,8 @@
 import { Button, Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { Global } from '@emotion/react'
 import CustomerRegisterForm from 'components/form/CustomerRegisterForm'
 import ProviderRegisterForm from 'components/form/ProviderRegisterForm'
-import { CustomerProvider } from 'contexts/Customers/CustomerContext'
-import { ProviderProvider } from 'contexts/Providers/ProviderContext'
+import { GlobalProvider } from 'contexts/GlobalContext'
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
 
@@ -18,11 +18,11 @@ export default function AddRegisterModal({ route }: AddRegisterModalProps) {
   const getComponentByRoute = (route: string) => {
     if (route.includes('/customers')) {
       return (
-        <CustomerProvider> <CustomerRegisterForm onClose={onClose}/> </CustomerProvider>
+        <CustomerRegisterForm onClose={onClose}/>
       );
     } else if (route.includes('/providers')) {
       return (
-        <ProviderProvider> <ProviderRegisterForm onClose={onClose}/> </ProviderProvider>
+        <ProviderRegisterForm onClose={onClose}/>
       );
     }
     return null;

@@ -6,15 +6,17 @@ import AuthLayout from './layouts/auth';
 import AdminLayout from './layouts/admin';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/theme';
+import { GlobalProvider } from 'contexts/GlobalContext';
 
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<React.StrictMode>
 			<HashRouter>
 				<Switch>
-					<Route path={`/auth`} component={AuthLayout} />
-					<Route path={`/admin`} component={AdminLayout} />
-					<Redirect from='/' to='/admin' />
+					<GlobalProvider>
+						<Route path={`/admin`} component={AdminLayout} />
+						<Redirect from='/' to='/admin' />
+					</GlobalProvider>
 				</Switch>
 			</HashRouter>
 		</React.StrictMode>

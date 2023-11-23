@@ -5,14 +5,14 @@ import { PersonData } from 'types/personData';
 import { useContext} from 'react';
 import { deleteCustomerApi } from 'services/api';
 import EditRegisterModal from 'components/modal/EditRegisterModal';
-import { CustomerContext } from 'contexts/Customers/CustomerContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 
 export default function CustomerTable() {
   const toast = useToast();
   const { onClose } = useDisclosure();
   const tableColumns = ["Id", "Nome", "Sobrenome", "Telefone", "Ações"];
 
-  const { customers, deleteCustomer } = useContext(CustomerContext);
+  const { customers, deleteCustomer } = useContext(GlobalContext);
 
   const columnKeyMapping: Record<string, keyof PersonData> = {
     "Id": "id",
