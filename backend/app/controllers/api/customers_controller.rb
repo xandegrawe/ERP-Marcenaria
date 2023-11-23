@@ -1,6 +1,6 @@
 class Api::CustomersController < ApplicationController
   def index
-    customers = Customer.includes(:person).all
+    customers = customer_service.index
     customer_data = customers.map do |customer|
       {
         id: customer.id,
@@ -14,60 +14,45 @@ class Api::CustomersController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      person = Person.create!(person_params)
-      address = Address.new(address_params.merge(person_id: person.id))
-      address.save!
-      
-      customer = Customer.new(customer_params.merge(person_id: person.id))
-      customer.save!
-  
-      render json: { person: person, address: address, customer: customer }, status: :created
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: "Falha na criação: #{e.message}" }, status: :unprocessable_entity
+    result = customer_service.create(customer_params, person_params, address_params)
+
+    if result[:error]
+      render json: { errors: "Falha na criação: #{result[:error]}" }, status: :unprocessable_entity
+    else
+      customer = result[:customer]
+      render json: { id: customer.id, name: customer.person.name, last_name: customer.last_name, phone: customer.person.phone} , status: :created
     end
   end
 
   def show
-    customer, person, address = select_customer
+    customer, person, address = customer_service.show
     render json: { customer: customer, address: address, person: person }
   end
 
   def update
-    customer, person, address = select_customer
+    result = customer_service.update(customer_params, person_params, address_params)
 
-    ActiveRecord::Base.transaction do
-      person.update!(person_params)
-      address.update!(address_params)
-      customer.update!(customer_params)
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: "Falha na atualização: #{e.message}" }, status: :unprocessable_entity
+    if result[:error]
+      render json: { errors: "Falha na atualização: #{result[:error]}" }, status: :unprocessable_entity
+    else
+      render json: result, status: :ok
     end
-    render json: { customer: customer, address: address, person: person }
   end
 
   def destroy
-    customer, person, address = select_customer
-    provider = Provider.find_by(person_id: customer.person_id)
-
-    ActiveRecord::Base.transaction do
-      customer.destroy!
-      provider.destroy! if provider
-      address.destroy!
-      person.destroy!
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { errors: "Falha na exclusão: #{e.message}" }, status: :unprocessable_entity
+    result = customer_service.destroy
+    
+    if result[:error]
+      render json: { errors: "Falha na exclusão: #{result[:error]}" }, status: :unprocessable_entity
+    else
+      render json: { message: result[:message] }
     end
   end
-
+ 
   private
 
-  def select_customer
-    customer = Customer.find(params[:id])
-    person = customer.person
-    address = Address.find_by(person_id: customer.person_id)
-
-    return [customer, person, address]
+  def customer_service
+    @customer_service ||= CustomerService.new(params[:id])
   end
 
   def person_params
