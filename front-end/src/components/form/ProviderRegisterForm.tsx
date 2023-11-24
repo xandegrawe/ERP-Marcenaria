@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { createProviderApi } from 'services/api';
 import { PersonData } from 'types/personData';
+import { handleInputChange } from './FormValidations';
 
 export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosureReturn['onClose'] }) {
 
@@ -28,8 +29,8 @@ export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosu
   const onSubmit = async (data: Partial<PersonData>) => {
     try {
       const response = await createProviderApi(data);
-      const newCustomer = response.data;
-      addProvider(newCustomer);
+      const newProvider = response.data;
+      addProvider(newProvider);
       toast({
         title: "Cliente criado com sucesso!",
         status: "success",
@@ -54,14 +55,14 @@ export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosu
         <Container>
         <form onSubmit={handleSubmit(onSubmit)}>
             <SimpleGrid columns={2} spacing={10}>
-            <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
-                <Input placeholder='Nome' color={textInputColor} {...register('person.name')}/>
+                <Input placeholder='Nome' color={textInputColor} {...register('name')} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>Email</FormLabel>
-                <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('person.email')} />
+                <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} onChange={(event) => handleInputChange(event, setValue)} />
               </FormControl>
 
               <FormControl>
@@ -70,18 +71,18 @@ export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosu
                   <InputLeftElement pointerEvents='none'>
                     <PhoneIcon color='gray.300' />
                   </InputLeftElement>
-                  <Input type='tel' />
+                  <Input type='tel' {...register('phone')} onChange={(event) => handleInputChange(event, setValue)} maxLength={14}/>
                 </InputGroup>
               </FormControl>
 
               <FormControl>
                 <FormLabel>CNPJ</FormLabel>
-                <Input placeholder='CNPJ' color={textInputColor}  {...register('provider.cnpj')}/>
+                <Input placeholder='CNPJ' color={textInputColor}  {...register('cnpj')} maxLength={18} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>CEP</FormLabel>
-                <Input placeholder='CEP' type="text" color={textInputColor} onBlur={checkCEP}/>
+                <Input placeholder='CEP' type="text" color={textInputColor} {...register('cep')} onBlur={checkCEP} maxLength={9} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl display={'block'}>

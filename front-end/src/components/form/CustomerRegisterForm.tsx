@@ -1,22 +1,25 @@
 import { PhoneIcon } from '@chakra-ui/icons';
-import {Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useToast } from '@chakra-ui/react'
+import { Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Textarea, UseDisclosureReturn, useColorModeValue, useToast} from '@chakra-ui/react'
 import { GlobalContext } from 'contexts/GlobalContext';
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { useForm } from 'react-hook-form';
 import { createCustomerApi } from 'services/api';
 import { PersonData } from 'types/personData';
+import { handleInputChange } from './FormValidations';
+
 
 export default function CustomerRegisterForm({ onClose }: { onClose: UseDisclosureReturn['onClose'] }) {
   let textInputColor = useColorModeValue('gray.700', 'white');
   const toast = useToast()
   const { register, setValue, setFocus, handleSubmit} = useForm();
   const { addCustomer } = useContext(GlobalContext);
-  
 
   const checkCEP = (e: { target: { value: string; }; }) => {
-    const cep = e.target.value.replace(/\D/g, '');
+    const cep = e.target.value.replace(/\D/g, '').replace(/(\d{5})(\d{3})/, '$1-$2');
+
     if (!e.target.value) return;
     fetch(`https://viacep.com.br/ws/${cep}/json/`).then((res) => res.json()).then((data) => {
+      console.log(data);
       setValue('state', data.uf);
       setValue('city', data.localidade);
       setValue('neighborhood', data.bairro);
@@ -53,20 +56,19 @@ export default function CustomerRegisterForm({ onClose }: { onClose: UseDisclosu
         <Container>
           <form onSubmit={handleSubmit(onSubmit)}>
             <SimpleGrid columns={2} spacing={10}>
-
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
-                <Input placeholder='Nome' color={textInputColor} {...register('name')}/>
+                <Input placeholder='Nome' color={textInputColor} {...register('name')} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
-
+            
               <FormControl>
                 <FormLabel>Sobrenome</FormLabel>
-                <Input placeholder='Sobrenome' color={textInputColor} {...register('last_name')}/>
+                <Input placeholder='Sobrenome' color={textInputColor} {...register('last_name')} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>Email</FormLabel>
-                <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} />
+                <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} onChange={(event) => handleInputChange(event, setValue)} />
               </FormControl>
 
               <FormControl>
@@ -75,23 +77,23 @@ export default function CustomerRegisterForm({ onClose }: { onClose: UseDisclosu
                   <InputLeftElement pointerEvents='none'>
                     <PhoneIcon color='gray.300' />
                   </InputLeftElement>
-                  <Input type='tel' {...register('phone')}/>
+                  <Input type='tel' {...register('phone')} onChange={(event) => handleInputChange(event, setValue)} maxLength={14}/>
                 </InputGroup>
               </FormControl>
 
               <FormControl>
                 <FormLabel>CPF</FormLabel>
-                <Input placeholder='CPF' color={textInputColor} {...register('cpf')}/>
+                <Input placeholder='CPF' color={textInputColor} {...register('cpf')} onChange={(event) => handleInputChange(event, setValue)} maxLength={14}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>RG</FormLabel>
-                <Input placeholder='RG' color={textInputColor} {...register('rg')}/>
+                <Input placeholder='RG' color={textInputColor} {...register('rg')} maxLength={9} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>CEP</FormLabel>
-                <Input placeholder='CEP' type="text" color={textInputColor} {...register('cep')} onBlur={checkCEP}/>
+                <Input placeholder='CEP' type="text" color={textInputColor} {...register('cep')} onBlur={checkCEP} maxLength={9} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl display={'block'}>

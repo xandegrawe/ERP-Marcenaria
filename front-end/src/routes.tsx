@@ -7,11 +7,10 @@ import MainDashboard from 'views/admin/default';
 import Profile from 'views/admin/profile';
 
 // Auth Imports
-import SignInCentered from 'views/auth/signIn';
 import CashFlow from 'views/admin/cashFlow';
 import { FaBoxes } from 'react-icons/fa';
 import People from 'views/admin/people_register';
-import { GlobalProvider } from 'contexts/GlobalContext';
+
 
 const routes = [
 	{
