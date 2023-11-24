@@ -57,10 +57,10 @@ export default function ProviderRegisterForm({ onClose }: { onClose: UseDisclosu
             <SimpleGrid columns={2} spacing={10}>
               <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
-                <Input placeholder='Nome' color={textInputColor} {...register('name')} onChange={(event) => handleInputChange(event, setValue)}/>
+                <Input placeholder='Nome' color={textInputColor} {...register('name')}/>
               </FormControl>
 
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} onChange={(event) => handleInputChange(event, setValue)} />
               </FormControl>

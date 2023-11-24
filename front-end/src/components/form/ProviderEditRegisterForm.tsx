@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { getFullProviderPersonDataApi,  updateProviderApi } from 'services/api';
 import { PersonData } from 'types/personData';
+import { formatCnpj, formatPhone, handleInputChange } from './FormValidations';
 type FormProps = {
   initialValues: PersonData;
   onClose: UseDisclosureReturn['onClose'];
@@ -14,17 +15,17 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
   const { register, setValue, setFocus, handleSubmit} = useForm();
 
   useEffect(() => {
-    const fetchCustomerData = async () => {
+    const fetchProviderData = async () => {
       if (id) {
         const providerData = await getFullProviderPersonDataApi(Number(id));
         let provider = providerData.data.provider;
         let person = providerData.data.person;
         let provider_address = providerData.data.address;
+
         setValue('name', person.name);
         setValue('email', person.email);
-        setValue('phone', person.phone);
-        setValue('cpf', provider.cpf);
-        setValue('cep', provider_address.cep);
+        setValue('phone', formatPhone(person.phone));
+        setValue('cnpj', formatCnpj(provider.cnpj));
         setValue('state', provider_address.state);
         setValue('city', provider_address.city);
         setValue('neighborhood', provider_address.neighborhood);
@@ -34,8 +35,8 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
       }
     };
 
-    fetchCustomerData();
-  }, [id]);
+    fetchProviderData();
+  }, [id, setValue]);
   
   let textInputColor = useColorModeValue('gray.700', 'white');
 
@@ -77,23 +78,17 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
       <ModalHeader>Adicione um novo Cliente</ModalHeader>
       <ModalCloseButton />
       <ModalBody pb={6}>
-        <Container>
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <Container>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <SimpleGrid columns={2} spacing={10}>
-
-              <FormControl>
+            <FormControl isRequired>
                 <FormLabel>Nome</FormLabel>
-                <Input defaultValue={initialValues.name} color={textInputColor} {...register('name')}/>
+                <Input placeholder='Nome' color={textInputColor} {...register('name')}/>
               </FormControl>
 
-              <FormControl>
-                <FormLabel>Sobrenome</FormLabel>
-                <Input defaultValue={initialValues.last_name} color={textInputColor} {...register('last_name')}/>
-              </FormControl>
-
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input type='email' defaultValue={initialValues.email} color={textInputColor} {...register('email')} />
+                <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} onChange={(event) => handleInputChange(event, setValue)} />
               </FormControl>
 
               <FormControl>
@@ -102,40 +97,36 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
                   <InputLeftElement pointerEvents='none'>
                     <PhoneIcon color='gray.300' />
                   </InputLeftElement>
-                  <Input type='tel' defaultValue={initialValues.phone} {...register('phone')}/>
+                  <Input type='tel' {...register('phone')} onChange={(event) => handleInputChange(event, setValue)} maxLength={14}/>
                 </InputGroup>
               </FormControl>
 
               <FormControl>
-                <FormLabel>CPF</FormLabel>
-                <Input  defaultValue={initialValues.cpf} color={textInputColor} {...register('cpf')}/>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>RG</FormLabel>
-                <Input defaultValue={initialValues.rg} color={textInputColor} {...register('rg')}/>
+                <FormLabel>CNPJ</FormLabel>
+                <Input placeholder='CNPJ' color={textInputColor}  {...register('cnpj')} maxLength={18} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl>
                 <FormLabel>CEP</FormLabel>
-                <Input defaultValue={initialValues.cep} type="text" color={textInputColor} {...register('cep')} onBlur={checkCEP}/>
+                <Input placeholder='CEP' type="text" color={textInputColor} {...register('cep')} onBlur={checkCEP} maxLength={9} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
               <FormControl display={'block'}>
                 <FormLabel>Endereço</FormLabel>
-                <Input  defaultValue={initialValues.state} color={textInputColor} {...register('state')} />
-                <Input marginTop={'10px'} defaultValue={initialValues.city} color={textInputColor} {...register('city')}/>
-                <Input marginTop={'10px'} defaultValue={initialValues.neighborhood} color={textInputColor} {...register('neighborhood')}/>
-                <Input marginTop={'10px'} defaultValue={initialValues.street} color={textInputColor} {...register('street')}/>
-                <Input marginTop={'10px'} defaultValue={initialValues.number} color={textInputColor}  {...register('number')}/>
+                <Input  placeholder='Estado' color={textInputColor} {...register('state')} />
+                <Input marginTop={'10px'} placeholder='Cidade' color={textInputColor} {...register('city')}/>
+                <Input marginTop={'10px'} placeholder='Bairro' color={textInputColor} {...register('neighborhood')}/>
+                <Input marginTop={'10px'} placeholder='Rua' color={textInputColor} {...register('street')}/>
+                <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('addressNumber')}/>
               </FormControl>
 
             </SimpleGrid>
 
             <FormControl mt={6}>
               <FormLabel>Observações</FormLabel>
-              <Textarea defaultValue={initialValues.observation} {...register('observation')} />
+              <Textarea placeholder='Deixe uma observação' {...register('observation')} />
             </FormControl>
+
             <ModalFooter>
               <Button type="submit" colorScheme='green' mr={3}>Salvar</Button>
               <Button onClick={onClose} variant='outline' colorScheme='red'>Cancelar</Button>

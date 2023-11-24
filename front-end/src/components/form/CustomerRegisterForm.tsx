@@ -66,7 +66,7 @@ export default function CustomerRegisterForm({ onClose }: { onClose: UseDisclosu
                 <Input placeholder='Sobrenome' color={textInputColor} {...register('last_name')} onChange={(event) => handleInputChange(event, setValue)}/>
               </FormControl>
 
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input type='email' placeholder='usuario@gmail.com' color={textInputColor} {...register('email')} onChange={(event) => handleInputChange(event, setValue)} />
               </FormControl>
