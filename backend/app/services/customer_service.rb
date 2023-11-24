@@ -9,8 +9,10 @@ class CustomerService < ApplicationController
   end
 
   def create(customer_params, person_params, address_params)
+    person = find_person_by_email(person_params[:email])
+    address = check_address(address_params)
     ActiveRecord::Base.transaction do
-      person = Person.create!(person_params)
+      person = Person.create!(person_params) if person.nil?
       address = Address.create!(address_params.merge(person_id: person.id))
       customer = Customer.create!(customer_params.merge(person_id: person.id))
   
@@ -20,12 +22,23 @@ class CustomerService < ApplicationController
     end
   end
 
+  def find_person_by_email(email)
+    Person.find_by(email: email)
+  end
+
+  def check_address(address_params)
+    nil if address_params.values.all?(&:blank?)
+    address_params
+  end
+
+
   def show
     select_customer
   end
 
   def update(customer_params, person_params, address_params)
     customer, person, address = select_customer
+    address = check_address(address_params)
 
     ActiveRecord::Base.transaction do
       person.update!(person_params)
@@ -45,8 +58,7 @@ class CustomerService < ApplicationController
     ActiveRecord::Base.transaction do
       address.destroy!
       customer.destroy!
-      provider.destroy! if provider
-      person.destroy!
+      person.destroy! if provider.nil?
     
       { message: 'Cliente excluído com sucesso' }
     rescue ActiveRecord::RecordInvalid => e
