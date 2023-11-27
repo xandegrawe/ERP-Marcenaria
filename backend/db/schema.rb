@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_11_182020) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_26_223538) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,37 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_182020) do
     t.string "state"
     t.string "neighborhood"
     t.index ["person_id"], name: "index_addresses_on_person_id"
+  end
+
+  create_table "bank_accounts", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "inicial_balance"
+    t.decimal "current_balance"
+  end
+
+  create_table "bank_invoices", force: :cascade do |t|
+    t.bigint "bank_account_id", null: false
+    t.bigint "category_id"
+    t.bigint "person_id"
+    t.decimal "amount"
+    t.integer "status"
+    t.date "due_date"
+    t.string "note"
+    t.integer "current_installment"
+    t.integer "total_installments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_account_id"], name: "index_bank_invoices_on_bank_account_id"
+    t.index ["category_id"], name: "index_bank_invoices_on_category_id"
+    t.index ["person_id"], name: "index_bank_invoices_on_person_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -65,6 +96,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_182020) do
   end
 
   add_foreign_key "addresses", "people"
+  add_foreign_key "bank_invoices", "bank_accounts"
+  add_foreign_key "bank_invoices", "categories"
+  add_foreign_key "bank_invoices", "people"
   add_foreign_key "customers", "people"
   add_foreign_key "providers", "people"
 end
