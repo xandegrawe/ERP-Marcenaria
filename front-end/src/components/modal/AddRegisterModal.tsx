@@ -1,10 +1,12 @@
 import { Button, Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import { Global } from '@emotion/react'
+import BankRegisterForm from 'components/form/BankRegisterForm'
 import CustomerRegisterForm from 'components/form/CustomerRegisterForm'
 import ProviderRegisterForm from 'components/form/ProviderRegisterForm'
 import { GlobalProvider } from 'contexts/GlobalContext'
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
+import AddCategoriesrModal from '../form/CategoriesRegisterForm'
 
 type AddRegisterModalProps = {
   route: { path: string }
@@ -23,6 +25,14 @@ export default function AddRegisterModal({ route }: AddRegisterModalProps) {
     } else if (route.includes('/providers')) {
       return (
         <ProviderRegisterForm onClose={onClose}/>
+      );
+    } else if (route.includes('financial')){
+      return (
+        <BankRegisterForm onClose={onClose}/>
+      );
+    } else if (route.includes('categories')) {
+      return (
+        <AddCategoriesrModal onClose={onClose}/>
       );
     }
     return null;

@@ -50,7 +50,7 @@ export default function CustomerTable() {
         if (column === "Ações") {
           return (
             <Td key="Ações" display="flex" textAlign="center" pl={'-0.5'}>
-              <EditRegisterModal route={{ path: '/customers' }} personData={person} />
+              <EditRegisterModal route={{ path: '/customers' }} personData={person} invoiceData={undefined} />
               <Button onClick={() => handleDeleteCustomer(person.id)}>
                 <FaTrash style={{ color: 'D40000' }} />
               </Button>

@@ -1,21 +1,52 @@
-import { Flex, Icon, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
-import { FaArrowDown, FaArrowUp, FaRegCalendarAlt } from "react-icons/fa";
-import { newestTransactions, olderTransactions } from "./general";
-import { AiOutlineExclamation } from "react-icons/ai";
+import { Flex, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react"
 import TransactionRow from "./TransactionRow";
-// You should also import some data for the table
-
-// This is how the data imported above should look like
+import { GlobalContext } from "contexts/GlobalContext";
+import { useContext, useMemo } from "react";
+import { BankInvoice } from "types/bankData";
+import { selectIcon } from "components/form/FormValidations";
 
 const Form = () => {  
-  const textColor = useColorModeValue("gray.700", "white")
+  const bgColor = useColorModeValue("white", "gray.700")
+  const textColor = useColorModeValue('gray.700', 'white');
+  const { invoices, selectedAccountId } = useContext(GlobalContext);
+
+  const filteredInvoices = useMemo(() => {
+    return invoices.filter((invoice: { bank_account_id: any; }) => 
+      String(invoice.bank_account_id) === String(selectedAccountId)
+    );
+  }, [invoices, selectedAccountId]);
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  const newInvoices = filteredInvoices.filter((invoice: { created_at: string | number | Date; }) => {
+    const dataFatura = new Date(invoice.created_at);
+    return dataFatura >= hoje;
+  });
   
+  const oldInvoices = filteredInvoices.filter((invoice: { created_at: string | number | Date; }) => {
+    const dataFatura = new Date(invoice.created_at);
+    return dataFatura < hoje;
+  });
+
+  const formatDate = (date: Date) => {
+    const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    return `${day} de ${month} de ${year} as ${hours}:${minutes}`;
+  };
+
   return (
-    <SimpleGrid columns={{ sm: 1, md: 2, lg: 1 }} spacing={{ base: '20px', xl: '20px' }}>
+    <SimpleGrid columns={1} spacing={{ base: '20px', xl: '20px' }}>
       <Flex 
       direction="column" 
       w="100%" 
-      backgroundColor={"white"} 
+      backgroundColor={bgColor} 
       borderRadius="8px"
       p={{ sm: "20px", md: "20px", lg: "20px" }}
       >
@@ -33,17 +64,6 @@ const Form = () => {
           >
             Suas Transações
           </Text>
-          <Flex alignItems="center">
-            <Icon
-              as={FaRegCalendarAlt}
-              color="gray.400"
-              fontSize="md"
-              me="6px"
-            ></Icon>
-            <Text color="gray.400" fontSize="sm" fontWeight="semibold">
-              23 - 30 Novembro 2023
-            </Text>
-          </Flex>
         </Flex>
         <Text
           color="gray.400"
@@ -53,17 +73,20 @@ const Form = () => {
         >
           Novas
         </Text>
-        {newestTransactions.map((row) => {
-          return (
-            <TransactionRow
-              name={row.name}
-              logo={row.logo}
-              date={row.date}
-              price={row.price}
-              category={row.category}
-            />
-          )
-        })}
+        {newInvoices.map((row: Partial<BankInvoice>) => {
+        return (
+          <TransactionRow
+            id = {row.id}
+            name={row.note}
+            logo={selectIcon(row.status)}
+            date={formatDate(new Date(row.created_at))}
+            price={row.amount}
+            category={ row.category_name }
+            person_name={ row.person_name }
+            status={row.status}
+          />
+        );
+      })}
         <Text
           color="gray.400"
           fontSize={{ sm: "sm", md: "md" }}
@@ -72,17 +95,20 @@ const Form = () => {
         >
           Antigas
         </Text>
-        {olderTransactions.map((row) => {
-          return (
-            <TransactionRow
-              name={row.name}
-              logo={row.logo}
-              date={row.date}
-              price={row.price}
-              category={row.category}
-            />
-          )
-        })}
+        {oldInvoices.map((row: Partial<BankInvoice>) => {
+        return (
+          <TransactionRow
+            id = {row.id}
+            name={row.note}
+            logo={selectIcon(row.status)}
+            date={formatDate(new Date(row.created_at))}
+            price={row.amount}
+            category={row.category_name}
+            person_name={row.person_name}
+            status={row.status}
+          />
+        );
+      })}
       </Flex>
     </SimpleGrid>
   );

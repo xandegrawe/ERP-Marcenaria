@@ -53,7 +53,6 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
   }
 
   const onSubmit = async (data: Partial<PersonData>) => {
-    console.log(data);
     try {
       await updateProviderApi(id, data);
       toast({

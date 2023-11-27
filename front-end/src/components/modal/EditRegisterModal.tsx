@@ -1,16 +1,19 @@
 import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import CustomerEditRegisterForm from 'components/form/CustomerEditRegisterForm'
+import InvoiceEditForm from 'components/form/InvoiceEditForm'
 import ProviderEditRegisterForm from 'components/form/ProviderEditRegisterForm'
 import React, { useState } from 'react'
 import { FaEdit, FaPlus } from 'react-icons/fa'
+import { BankInvoice } from 'types/bankData'
 import { PersonData } from 'types/personData'
 
 type EditRegisterModalProps = {
   route: { path: string }
-  personData: PersonData; 
+  personData: PersonData | undefined
+  invoiceData: BankInvoice | undefined
 }
 
-export default function EditRegisterModal({ route, personData}: EditRegisterModalProps) {
+export default function EditRegisterModal({ route, personData, invoiceData}: EditRegisterModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   
   const getComponentByRoute = (route: string) => {
@@ -21,6 +24,10 @@ export default function EditRegisterModal({ route, personData}: EditRegisterModa
     } else if (route.includes('/providers')) {
       return (
         <ProviderEditRegisterForm  onClose={onClose} initialValues={personData}/>
+      );
+    } else if (route.includes('/financial')) {
+      return (
+        <InvoiceEditForm initialValues={invoiceData} onClose={onClose} />
       );
     }
     return null;

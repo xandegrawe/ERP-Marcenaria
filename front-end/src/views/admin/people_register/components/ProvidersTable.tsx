@@ -50,7 +50,7 @@ export default function ProviderTable() {
         if (column === "Ações") {
           return (
             <Td key="Ações" display="flex" textAlign="center" pl={'-0.5'}>
-              <EditRegisterModal route={{ path: '/providers' }} personData={person} />
+              <EditRegisterModal route={{ path: '/providers' }} personData={person} invoiceData={undefined} />
               <Button onClick={() => handleDeleteProvider(person.id)}>
                 <FaTrash style={{ color: 'D40000' }} />
               </Button>
