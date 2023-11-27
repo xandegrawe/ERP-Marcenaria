@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { create } from 'domain';
 import { PersonData } from 'types/personData';
+import { BankAccount, BankInvoice, Category } from 'types/bankData';
 
 const headers = {
   "Content-Type": "application/json",
@@ -111,3 +112,66 @@ export const updateProviderApi = (id: number, formData: Partial<PersonData>) => 
 
   return axios.put(`http://localhost:3000/api/providers/${id}`, requestData, { headers });
 }
+
+export const createBankAccountApi = (formData: Partial<BankAccount>) => {
+  const requestData = {
+    bank_account: {
+      name: formData.name,
+      inicial_balance: formData.inicial_balance,
+    },
+  };
+
+  return axios.post('http://localhost:3000/api/bank_accounts', requestData, { headers });
+}
+
+export const listBankAccountsApi = () => axios.get<BankAccount[]>('http://localhost:3000/api/bank_accounts', { headers })
+export const deleteBankAccountApi = (id: number) => axios.delete(`http://localhost:3000/api/bank_accounts/${id}`, { headers });
+
+export const createBankInvoice = (formData: Partial<BankInvoice>) => {
+  const requestData = {
+    bank_invoice: {
+      note: formData.note,
+      amount: formData.amount,
+      status: formData.status,
+      bank_account_id: formData.bank_account_id,
+      category_id: formData.category_id,
+      person_id: formData.person_id,
+    },
+  };
+
+  return axios.post('http://localhost:3000/api/bank_invoices', requestData, { headers });
+}
+
+export const listBankInvoicesApi = () => axios.get<BankAccount[]>('http://localhost:3000/api/bank_invoices', { headers })
+export const getFullBankInvoiceDataApi = (id: number) => axios.get(`http://localhost:3000/api/bank_invoices/${id}`, { headers });
+
+export const updateBankInvoiceApi = (formData: Partial<BankInvoice>) => {
+  const requestData = {
+    bank_invoice: {
+      note: formData.note,
+      amount: formData.amount,
+      status: formData.status,
+      bank_account_id: formData.bank_account_id,
+      category_id: formData.category_id,
+      person_id: formData.person_id,
+    },
+  };
+
+  return axios.put(`http://localhost:3000/api/bank_invoices/${formData.id}`, requestData, { headers });
+}
+
+export const deleteBankInvoiceApi = (id: number) => axios.delete(`http://localhost:3000/api/bank_invoices/${id}`, { headers });
+
+export const createCategoryApi = (formData: Partial<Category>) => {
+  const requestData = {
+    category: {
+      name: formData.name,
+    },
+  };
+
+  return axios.post('http://localhost:3000/api/categories', requestData, { headers });
+}
+
+export const listCategoriesApi = () => axios.get<Category[]>('http://localhost:3000/api/categories', { headers })
+
+export const listPeopleApi = () => axios.get<PersonData[]>('http://localhost:3000/api/people', { headers })

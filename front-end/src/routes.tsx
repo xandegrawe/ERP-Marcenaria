@@ -1,29 +1,17 @@
 import { Icon } from '@chakra-ui/react';
-import { MdPerson, MdHome, MdOutlineAttachMoney, MdSupervisorAccount, MdLock } from 'react-icons/md';
-
-// Admin Imports
-import MainDashboard from 'views/admin/default';
-// import NFTMarketplace from 'views/admin/marketplace';
-import Profile from 'views/admin/profile';
-
-// Auth Imports
+import { MdOutlineAttachMoney, MdSupervisorAccount } from 'react-icons/md';
+import { IoMdPricetags } from "react-icons/io";
 import CashFlow from 'views/admin/cashFlow';
 import { FaBoxes } from 'react-icons/fa';
 import People from 'views/admin/people_register';
+import Categories from 'views/admin/Categories';
 
 
 const routes = [
 	{
-		name: 'Dashboards',
-		layout: '/admin',
-		path: '/default',
-		icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-		component: MainDashboard
-	},
-	{
 		name: 'Financeiro',
 		layout: '/admin',
-		path: '/financeiro',
+		path: '/financial',
 		icon: <Icon as={MdOutlineAttachMoney} width='20px' height='20px' color='inherit' />,
 		component: CashFlow,
 		secondary: true
@@ -43,19 +31,12 @@ const routes = [
 		component: () => <People route={{ path: '/providers' }} />
 	},
 	{
-		name: 'Perfil',
+		name: 'Categoria',
 		layout: '/admin',
-		path: '/profile',
-		icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
-		component: Profile
+		path: '/categories',
+		icon: <Icon as={IoMdPricetags} width='20px' height='20px' color='inherit' />,
+		component: Categories
 	},
-	// {
-	// 	name: 'Sign In',
-	// 	layout: '/auth',
-	// 	path: '/sign-in',
-	// 	icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-	// 	component: SignInCentered
-	// },
 ];
 
 export default routes;
