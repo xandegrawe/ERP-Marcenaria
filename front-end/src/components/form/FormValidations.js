@@ -1,3 +1,6 @@
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { AiOutlineExclamation } from "react-icons/ai";
+
 export const formatCep = (value) => {
   return value.replace(/\D/g, '').replace(/(\d{5})(\d{1,3})/, '$1-$2');
 };
@@ -52,6 +55,45 @@ export const formatPhone = (value) => {
   return value.replace(/(\d{2})/, '($1');
 }
 
+export const formatBalance = (value) => {
+  value = value.replace(/\D/g, '');
+
+  value = value.replace(/(\d+)(\d{2})$/, '$1,$2');
+
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.').replace(/^0\./, '');
+}
+
+export function selectIcon(status) {
+  if (status === "2") {
+    return AiOutlineExclamation
+  } else if (status === "0") {
+    return FaArrowUp
+  } else {
+    return FaArrowDown
+  }
+}
+
+export function formatPrice(price, status) {
+  if (status === "2") {
+    price = "Pendente"
+    return price
+  } else if (status === "0") {
+    return `+ R$ ${price}`
+  }
+  else {
+    return `- R$ ${price}`
+  }
+}
+
+export function formatPriceColor(price) {
+  if (price[0] === '+')
+    return "green.500"
+  else if (price[0] === '-')
+    return "red.500"
+  else
+    return "yellow.400"
+}
+
 export const handleInputChange = (event, setValue) => {
   const { name, value } = event.target;
   let formattedValue = value;
@@ -66,7 +108,11 @@ export const handleInputChange = (event, setValue) => {
     formattedValue = formatPhone(value);
   } else if (name === 'cnpj') {
     formattedValue = formatCnpj(value);
+  } else if (name === 'inicial_balance' || name === 'amount') {
+    formattedValue = formatBalance(value);
   }
+
+
   setValue(name, formattedValue);
   event.target.value = formattedValue;
 };
