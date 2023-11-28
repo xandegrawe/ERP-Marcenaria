@@ -10,6 +10,8 @@ WORKDIR /usr/src/backend
 
 COPY Gemfile /usr/src/backend/Gemfile
 
+COPY Gemfile.lock /usr/src/backend/Gemfile.lock
+
 RUN bundle install
 
 EXPOSE 3000
