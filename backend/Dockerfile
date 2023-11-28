@@ -8,7 +8,7 @@ RUN mkdir /usr/src/backend
 
 WORKDIR /usr/src/backend
 
-COPY Gemfile Gemfile.lock /usr/src/backend
+COPY Gemfile Gemfile.lock ./
 
 RUN bundle install
 
