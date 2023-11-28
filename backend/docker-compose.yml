@@ -13,30 +13,3 @@ services:
     tty: true
     environment:
       RAILS_ENV: development
-    depends_on:
-      - db
-      - redis
-
-  db:
-    image: postgres:14-alpine
-    volumes:
-      - postgresql:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
- 
-  redis:
-    image: redis:6.0.12-alpine
-    command: redis-server
-    volumes:
-      - redis:/data
-    ports:
-      - "127.0.0.1:6379:6379"
-    logging:
-      driver: none
-
-volumes:
-  postgresql:
-  redis:
