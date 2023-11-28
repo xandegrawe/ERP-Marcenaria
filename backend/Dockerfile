@@ -8,13 +8,7 @@ RUN mkdir /usr/src/backend
 
 WORKDIR /usr/src/backend
 
-ADD . /usr/src/backend
-
 COPY Gemfile /usr/src/backend/Gemfile
-
-RUN gem install rails -v 7.0.4
-
-RUN gem install bundler -v 2.4.10
 
 RUN bundle install
 
