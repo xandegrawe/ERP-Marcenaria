@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM ruby:3.2.2 
 
 RUN apt-get update -qq && apt-get install -y build-essential nodejs npm libpq-dev postgresql-client
 
@@ -8,9 +8,7 @@ RUN mkdir /usr/src/backend
 
 WORKDIR /usr/src/backend
 
-COPY Gemfile /usr/src/backend/Gemfile
-
-COPY Gemfile.lock /usr/src/backend/Gemfile.lock
+COPY Gemfile Gemfile.lock /usr/src/backend
 
 RUN bundle install
 
