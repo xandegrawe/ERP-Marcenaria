@@ -1,29 +1,53 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue, Button, Flex, toast, useToast, Icon, SimpleGrid } from "@chakra-ui/react";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue, Button, Flex, useToast, Icon, SimpleGrid } from "@chakra-ui/react";
 import MiniStatistics from "components/card/MiniStatistics";
 import InvoiceAddRegister from "components/form/InvoiceAddRegister";
 import IconBox from "components/icons/IconBox";
 
 import { GlobalContext } from "contexts/GlobalContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaMinus } from "react-icons/fa";
 import { MdBarChart, MdAttachMoney, MdMoneyOff} from "react-icons/md";
-import { deleteBankAccountApi } from "services/api";
+import { calculateSummarysApi, deleteBankAccountApi } from "services/api";
 
 interface Account {
   id: number;
   name: string;
 }
 
+interface AccountSummary {
+  [key: number]: {
+    current_balance: string;
+    income: string;
+    expenses: string;
+  };
+}
 
 const SubNavbar = () => {
   const { bankAccounts, deleteBankAccount, selectAccount } = useContext(GlobalContext);
   const toast = useToast();
   let panelBg = useColorModeValue('#E8F5E9', 'gray.700');
   let boxBg = useColorModeValue('white', 'gray.800');
-  const brandColor = useColorModeValue('brand.500', 'white');
+  const balanceColor = useColorModeValue('black', 'white');
+  const [accountSummary, setAccountSummary] = useState<AccountSummary>({});
   
+  useEffect(() => {
+    bankAccounts.forEach((account: { id: number; }) => {
+      fetchCalculateInvoices(account.id);
+    });
+  }, [bankAccounts]);
+
   const handleTabChange = (accountId: number) => {
     selectAccount(accountId);
+  };
+
+  const fetchCalculateInvoices = async (accountId: number) => {
+    try {
+      const response = await calculateSummarysApi(accountId);
+      const data = response.data;
+      setAccountSummary(prev => ({ ...prev, [accountId]: data }));
+    } catch (error) {
+      console.error("Erro ao calcular as faturas:", error);
+    }
   };
 
   const handleDeleteBankAccount = async (id: number) => {
@@ -47,8 +71,11 @@ const SubNavbar = () => {
   };
 
   return (
-    <Tabs isLazy variant='enclosed-colored' marginTop={'2%'}>
-      <TabList>
+    <Tabs isLazy
+      variant='enclosed-colored'
+      marginTop={'2%'}
+    >
+      <TabList >
         {bankAccounts.map((account: Account) => (
           <Tab 
             key={account.id}
@@ -81,11 +108,11 @@ const SubNavbar = () => {
                     w='56px'
                     h='56px'
                     bg={boxBg}
-                    icon={<Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />}
+                    icon={<Icon w='32px' h='32px' as={MdAttachMoney} color={balanceColor} />}
                   />
                 }
                 name='Caixa Atual'
-                value='$642.39'
+                value={accountSummary[account.id]?.current_balance ?? '-'}
               />
               <MiniStatistics
                 startContent={
@@ -93,11 +120,11 @@ const SubNavbar = () => {
                     w='56px'
                     h='56px'
                     bg={boxBg}
-                    icon={<Icon w='32px' h='32px' as={MdBarChart} color={brandColor} />}
+                    icon={<Icon w='32px' h='32px' as={MdBarChart} color={"green.400"} />}
                   />
                 }
                 name='Entradas do mês'
-                value='$350.4'
+                value={accountSummary[account.id]?.income ?? '-'}
               />
             <MiniStatistics
                 startContent={
@@ -105,11 +132,11 @@ const SubNavbar = () => {
                     w='56px'
                     h='56px'
                     bg={boxBg}
-                    icon={<Icon w='32px' h='32px' as={MdMoneyOff} color={brandColor} />}
+                    icon={<Icon w='32px' h='32px' as={MdMoneyOff} color={"red.400"} />}
                   />
                 }
                 name='Saídas do mês'
-                value='$350.4'
+                value={accountSummary[account.id]?.expenses ?? '-'}
               />
             <Flex></Flex>
             <Flex justifyContent={"end"} mt={'20%'}>

@@ -86,12 +86,13 @@ export function formatPrice(price, status) {
 }
 
 export function formatPriceColor(price) {
-  if (price[0] === '+')
-    return "green.500"
-  else if (price[0] === '-')
-    return "red.500"
-  else
-    return "yellow.400"
+  if (price.charAt(0) === '+') {
+    return "green.500"; 
+  } else if (price.charAt(0) === '-') {
+    return "red.500";
+  } else {
+    return "yellow.400";
+  }
 }
 
 export const handleInputChange = (event, setValue) => {

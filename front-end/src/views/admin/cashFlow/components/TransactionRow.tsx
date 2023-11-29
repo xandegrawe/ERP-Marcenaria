@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { Box, Button, Flex, Icon, SimpleGrid, Text, toast, useColorModeValue, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, SimpleGrid, Text, useColorModeValue, useToast } from "@chakra-ui/react";
 import EditRegisterModal from "components/modal/EditRegisterModal";
 import { FaTrash } from "react-icons/fa";
-import { BankInvoice } from "types/bankData";
 import { GlobalContext } from "contexts/GlobalContext";
 import { deleteBankInvoiceApi } from "services/api";
 import { formatPrice, formatPriceColor, selectIcon } from "components/form/FormValidations";
@@ -25,11 +24,11 @@ const TransactionRow: React.FC<TransactionRowProps> = ({id, name, logo, date, pr
   const categoryColor = useColorModeValue('purple', 'purple.400');
   const titleColor = useColorModeValue('gray.700', 'orange.400');
   const personColor = useColorModeValue('blue.400', 'blue.400');
-  const { invoices, deleteInvoice } = useContext(GlobalContext);
+  const { invoices, deleteInvoice} = useContext(GlobalContext);
   const toast = useToast();
   let icon = selectIcon(status);
   let formattedPrice = formatPrice(price, status);
-  let color = formatPriceColor(price);
+  let color = formatPriceColor(formattedPrice);
 
   const selected_invoice = invoices.find((invoice: { id: number; }) => invoice.id === id)
 
@@ -59,13 +58,7 @@ const TransactionRow: React.FC<TransactionRowProps> = ({id, name, logo, date, pr
         <Box
           me='14px'
           borderRadius='50%'
-          color={
-            price[0] === "+"
-              ? "green.500"
-              : price[0] === "-"
-              ? "red.500"
-              : "yellow.400"
-          }
+          color={color}
           border='1px solid'
           display='flex'
           alignItems='center'

@@ -81,7 +81,7 @@ export default function Dashboard(props: { [x: string]: any }) {
 						<Box>
 							<Navbar
 								onOpen={onOpen}
-								logoText={'Default Brand Text'}
+								logoText={'Default'}
 								brandText={getActiveRoute(routes)}
 								secondary={getActiveNavbar(routes)}
 								message={getActiveNavbarText(routes)}

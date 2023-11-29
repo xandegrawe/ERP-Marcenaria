@@ -121,6 +121,10 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
+  const updateBankAccount = (bankAccounts) => {
+    setBankAccounts(bankAccounts);
+  }
+
   return (
     <GlobalContext.Provider value={
       { providers,
@@ -136,11 +140,12 @@ export const GlobalProvider = ({ children }) => {
         bankAccounts,
         addBankAccount,
         deleteBankAccount,
+        updateBankAccount,
 
         invoices,
         addInvoice,
         deleteInvoice,
-        updateInvoice, 
+        updateInvoice,
         
         categories,
         addCategory,
