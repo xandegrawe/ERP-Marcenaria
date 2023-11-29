@@ -94,7 +94,23 @@ class BankInvoiceService < ApplicationController
     end
   end
   
-  
+  def calculate_summary(params)
+    return ["-", "-", "-"] if params[:id].nil? || params[:id].blank?
+    bank_account = BankAccount.find(params[:id].to_i)
+    invoices = BankInvoice.where(bank_account_id: bank_account.id)
+    bank_inicial_formated = formated_balance_view(bank_account.inicial_balance)
+    return [bank_inicial_formated, '-', '-'] if invoices.nil? || invoices.blank?
+    expenses = invoices.where(status: 1).sum(:amount)
+    income = invoices.where(status: 0).sum(:amount)
+    current_balance =  bank_account.inicial_balance.to_i + income - expenses
+    current_balance = bank_account.inicial_balance if current_balance.nil? || current_balance.blank?
+
+    expenses = formated_balance_view(expenses)
+    income = formated_balance_view(income)
+    current_balance = formated_balance_view(current_balance)
+
+    [current_balance, income, expenses]
+  end
 
   def destroy(params)
     bank_invoice = select_invoice_account(params)

@@ -20,6 +20,11 @@ class Api::BankInvoicesController < ApplicationController
     end
   end
 
+  def calculate_summary
+    current_balance, income, expenses = bank_invoice_service.calculate_summary(params)
+    render json: { current_balance: current_balance, income: income, expenses: expenses }
+  end
+
   def update
     result = bank_invoice_service.update(params)
     
