@@ -1,3 +1,3 @@
-class ProviderSerializer < ActiveModel::Serializer
+class PersonSerializer < ActiveModel::Serializer
   attributes  :id, :name
 end
