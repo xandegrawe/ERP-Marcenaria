@@ -12,4 +12,5 @@ services:
     stdin_open: true
     tty: true
     environment:
+      SECRET_KEY_BASE: <%= ENV["SECRET_KEY_BASE"] %>
       RAILS_ENV: production
