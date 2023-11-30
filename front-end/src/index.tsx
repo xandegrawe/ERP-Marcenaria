@@ -14,7 +14,6 @@ ReactDOM.render(
 				<Switch>
 					<GlobalProvider>
 						<Route path={`/admin`} component={AdminLayout} />
-						<Redirect from='/' to='/admin/financial' />
 					</GlobalProvider>
 				</Switch>
 			</BrowserRouter>
