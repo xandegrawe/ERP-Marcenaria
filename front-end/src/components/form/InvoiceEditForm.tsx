@@ -67,7 +67,6 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
         isClosable: true,
       });
     }
-    window.location.reload();
   };
 
   const dropdownColor = { 
