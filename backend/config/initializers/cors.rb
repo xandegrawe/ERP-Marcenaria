@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Avoid CORS issues when API is called from the frontend app.
@@ -7,11 +9,27 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:3001"
+    origins 'http://localhost:3001'
 
-    resource "*",
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head],
-      expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
+    resource '*',
+             headers: :any,
+             methods: %i[get post put patch delete options head],
+             expose: %w[access-token expiry token-type uid client]
   end
 end
+
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
+#   allow do
+#     origins "http://localhost:3001",
+#             "https://legratech.vercel.app",
+#             "legratech.vercel.app",
+#             "legratech.fly.dev",
+#             "localhost:3000",
+#             "localhost:3001"
+
+#     resource "*",
+#       headers: :any,
+#       methods: [:get, :post, :put, :patch, :delete, :options, :head],
+#       expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
+#   end
+# end

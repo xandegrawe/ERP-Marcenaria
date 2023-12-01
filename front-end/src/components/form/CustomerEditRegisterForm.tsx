@@ -128,7 +128,7 @@ export default function CustomerEditRegisterForm({ initialValues, onClose }: For
                 <Input marginTop={'10px'} placeholder='Cidade' color={textInputColor} {...register('city')}/>
                 <Input marginTop={'10px'} placeholder='Bairro' color={textInputColor} {...register('neighborhood')}/>
                 <Input marginTop={'10px'} placeholder='Rua' color={textInputColor} {...register('street')}/>
-                <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('addressNumber')}/>
+                <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('number')}/>
               </FormControl>
 
             </SimpleGrid>

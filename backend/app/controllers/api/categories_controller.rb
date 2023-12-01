@@ -1,30 +1,34 @@
-class Api::CategoriesController < ApplicationController
-  def index
-    categories = Category.all
-    render json: categories
-  end
+# frozen_string_literal: true
 
-  def show
-    category = select_category
-    render json: category
-  end
-
-  def create
-    category = Category.new(category_params)
-    if category.save
-      render json: category
-    else
-      render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
+module Api
+  class CategoriesController < ApplicationController
+    def index
+      categories = Category.all
+      render json: categories
     end
-  end
 
-  private
+    def show
+      category = select_category
+      render json: category
+    end
 
-  def category_params
-    params.require(:category).permit(:name)
-  end
+    def create
+      category = Category.new(category_params)
+      if category.save
+        render json: category
+      else
+        render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
 
-  def select_category
-    category = Category.find(params[:id])
+    private
+
+    def category_params
+      params.require(:category).permit(:name)
+    end
+
+    def select_category
+      Category.find(params[:id])
+    end
   end
 end

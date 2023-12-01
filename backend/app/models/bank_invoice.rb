@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BankInvoice < ApplicationRecord
   belongs_to :bank_account
   belongs_to :category, optional: true

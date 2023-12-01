@@ -54,6 +54,7 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
 
   const onSubmit = async (data: Partial<PersonData>) => {
     try {
+      debugger
       await updateProviderApi(id, data);
       toast({
         title: "Fornecedor atualizado com sucesso!",
@@ -116,7 +117,7 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
                 <Input marginTop={'10px'} placeholder='Cidade' color={textInputColor} {...register('city')}/>
                 <Input marginTop={'10px'} placeholder='Bairro' color={textInputColor} {...register('neighborhood')}/>
                 <Input marginTop={'10px'} placeholder='Rua' color={textInputColor} {...register('street')}/>
-                <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('addressNumber')}/>
+                <Input marginTop={'10px'} placeholder='Número' color={textInputColor}  {...register('number')}/>
               </FormControl>
 
             </SimpleGrid>

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateRequiresBankInvoices < ActiveRecord::Migration[7.0]
   def change
     change_column_null :bank_invoices, :person_id, true

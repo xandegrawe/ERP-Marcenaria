@@ -1,12 +1,16 @@
-class Api::PeopleController < ApplicationController
-  def index
-    people = Person.all
-    render json: people.as_json(only: [:id, :name])
-  end
+# frozen_string_literal: true
 
-  private
+module Api
+  class PeopleController < ApplicationController
+    def index
+      people = Person.all
+      render json: people.as_json(only: %i[id name])
+    end
 
-  def person_params
-    params.require(:person).permit(:id, :name)
+    private
+
+    def person_params
+      params.require(:person).permit(:id, :name)
+    end
   end
 end

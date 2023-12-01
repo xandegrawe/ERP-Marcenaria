@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>app/services/provider_service.rb</title>
+    <link href="./assets/0.3.1/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.3.1/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.3.1/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Backend C0 Coverage Information - Simploco - RCov</h1>
+    <h2>app/services/provider_service.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="app-services-provider_service_rb.html">app/services/provider_service.rb</a></td>
+            <td class='right_align'><tt>80</tt></td>
+            <td class='right_align'><tt>45</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>93.75%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:94px"></div>
+        <div class="uncovered" style="width:6px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>88.89%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:89px"></div>
+        <div class="uncovered" style="width:11px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="inferred">
+          <td><pre><a name="line2">2</a> # frozen_string_literal: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line3">3</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line4">4</a> class ProviderService &lt; ApplicationController</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line5">5</a>   def initialize(id = nil)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a>     @id = id</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line7">7</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line8">8</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line9">9</a>   def index</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line10">10</a>     Provider.includes(:person).all</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line11">11</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line12">12</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line13">13</a>   def create(provider_params, person_params, address_params)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line14">14</a>     person = find_person_by_email(person_params[:email])</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line15">15</a>     address = check_address(address_params)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line16">16</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line17">17</a>     ActiveRecord::Base.transaction do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line18">18</a>       person = Person.create!(person_params) if person.nil?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line19">19</a>       address = Address.create!(address_params.merge(person_id: person.id)) if address.present?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line20">20</a>       provider = Provider.create!(provider_params.merge(person_id: person.id))</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line22">22</a>       { person:, address:, provider:, message: &#39;Fornecedor criado com sucesso&#39; }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line23">23</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line24">24</a>       { error: e.message }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line25">25</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line27">27</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line28">28</a>   def check_address(address_params)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line29">29</a>     return nil if address_params.values.all?(&amp;:blank?)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line30">30</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line31">31</a>     address_params</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line32">32</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line33">33</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line34">34</a>   def find_person_by_email(email)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line35">35</a>     Person.find_by(email:)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line36">36</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line37">37</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line38">38</a>   def show</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line39">39</a>     select_provider</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line40">40</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line41">41</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line42">42</a>   def update(provider_params, person_params, address_params)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line43">43</a>     provider, person, address = select_provider</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line44">44</a>     new_address = check_address(address_params)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line45">45</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line46">46</a>     ActiveRecord::Base.transaction do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line47">47</a>       person.update!(person_params)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line48">48</a>       address.update!(address_params) if address.present? &amp;&amp; new_address.present?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line49">49</a>       provider.update!(provider_params)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line50">50</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line51">51</a>       { provider:, address:, person:, message: &#39;Fornecedor atualizado com sucesso&#39; }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line52">52</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line53">53</a>       { error: e.message }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line54">54</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line55">55</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line56">56</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line57">57</a>   def destroy</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line58">58</a>     provider, person, address = select_provider</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line59">59</a>     customer = Customer.find_by(person_id: provider.person_id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line60">60</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line61">61</a>     ActiveRecord::Base.transaction do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line62">62</a>       address.destroy! if address.present? || !address.nil?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line63">63</a>       provider.destroy!</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line64">64</a>       person.destroy! if customer.nil?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line65">65</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line66">66</a>       { message: &#39;Fornecedor excluído com sucesso&#39; }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line67">67</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line68">68</a>       { error: e.message }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line69">69</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line70">70</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line71">71</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line72">72</a>   private</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line73">73</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line74">74</a>   def select_provider</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line75">75</a>     provider = Provider.find(@id)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line76">76</a>     person = provider.person</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line77">77</a>     address = Address.find_by(person_id: provider.person_id)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line78">78</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line79">79</a>     [provider, person, address]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line80">80</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line81">81</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2023-12-01 21:12:40 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.1</a></p>
+
+  </body>
+</html>

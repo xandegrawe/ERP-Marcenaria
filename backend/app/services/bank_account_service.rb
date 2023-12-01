@@ -1,14 +1,24 @@
+# frozen_string_literal: true
+
 class BankAccountService < ApplicationController
   def index
-    bank_accounts = BankAccount.all
+    BankAccount.all
   end
 
   def create(bank_account_params)
-    inicial_balance = formated_balance(bank_account_params[:inicial_balance])
-    name = bank_account_params[:name]
-    bank_account = BankAccount.new(name: name, inicial_balance: inicial_balance)
-    bank_account.save!
-    bank_account
+    return { error: 'Saldo inicial inválido ou ausente.' } unless bank_account_params[:inicial_balance].is_a?(String)
+
+    ActiveRecord::Base.transaction do
+      inicial_balance = formated_balance(bank_account_params[:inicial_balance])
+      name = bank_account_params[:name]
+      bank_account = BankAccount.new(name:, inicial_balance:)
+
+      return bank_account if bank_account.save
+
+      return { error: bank_account.errors.full_messages.to_sentence }
+    end
+  rescue StandardError => e
+    { error: "Erro inesperado: #{e.message}" }
   end
 
   def formated_balance(inicial_balance)
@@ -18,40 +28,27 @@ class BankAccountService < ApplicationController
   end
 
   def show
-    bank_account = BankAccount.find(params[:id])
+    BankAccount.find(params[:id])
   end
 
-  # def update(customer_params, person_params, address_params)
-  #   customer, person, address = select_customer
-  #   address = check_address(address_params)
-
-  #   ActiveRecord::Base.transaction do
-  #     person.update!(person_params)
-  #     address.update!(address_params)
-  #     customer.update!(customer_params)
-      
-  #     { customer: customer, address: address, person: person, message: "Cliente atualizado com sucesso" }
-  #   rescue ActiveRecord::RecordInvalid => e
-  #     { error: e.message }
-  #   end
-  # end
-
   def destroy(bank_account)
-    bank_invoices = BankInvoice.where(bank_account_id: bank_account.id)
-
     ActiveRecord::Base.transaction do
-      bank_invoices.destroy_all
+      bank_account.bank_invoices.destroy_all
       bank_account.destroy!
-    
-      { message: 'Conta excluída com sucesso' }
+
+      { success: true, message: 'Conta excluída com sucesso.' }
+    rescue ActiveRecord::RecordNotDestroyed => e
+      { success: false, error: "Falha ao excluir a conta e suas faturas: #{e.record.errors.full_messages.to_sentence}" }
     rescue ActiveRecord::RecordInvalid => e
-      { error: e.message}
+      { success: false, error: "Falha ao excluir a conta: #{e.message}" }
+    rescue StandardError => e
+      { success: false, error: "Erro inesperado: #{e.message}" }
     end
   end
 
-  private 
+  private
 
   def select_bank_account(params)
-    bank_account = BankAccount.find(params[:id])
+    BankAccount.find(params[:id])
   end
 end

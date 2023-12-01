@@ -1,64 +1,73 @@
-class Api::ProvidersController < ApplicationController
-  def index
-    providers = Provider.includes(:person).all
-    provider_data = providers.map do |provider|
-      {
-        id: provider.id,
-        cnpj: provider.cnpj,
-        name: provider.person.name,
-        phone: provider.person.phone
-      }
+# frozen_string_literal: true
+
+module Api
+  class ProvidersController < ApplicationController
+    def index
+      providers = Provider.includes(:person).all
+      provider_data = providers.map do |provider|
+        {
+          id: provider.id,
+          cnpj: provider.cnpj,
+          name: provider.person.name,
+          phone: provider.person.phone
+        }
+      end
+      render json: provider_data
     end
-    render json: provider_data
-  end
 
-  def create
-    result = provider_service.create(provider_params, person_params, address_params)
+    def create
+      result = provider_service.create(provider_params, person_params, address_params)
 
-    if result[:error]
-      render json: { errors: "Falha na criação: #{result[:error]}" }, status: :unprocessable_entity
-    else
-      provider = result[:provider]
-      render json: { id: provider.id, name: provider.person.name, cnpj: provider.cnpj, phone: provider.person.phone} , status: :created
+      if result[:error]
+        render json: { errors: "Falha na criação: #{result[:error]}" }, status: :unprocessable_entity
+      else
+        provider = result[:provider]
+        render json: { id: provider.id, name: provider.person.name, cnpj: provider.cnpj, phone: provider.person.phone },
+               status: :created
+      end
     end
-  end
 
-  def show
-    provider, person, address = provider_service.show
-    render json: { provider: provider, address: address, person: person }
-  end
-
-  def update
-    provider = Provider.find(params[:id])
-    provider.update!(customer_params)
-    render json: provider
-  end
-
-  def destroy
-    result = provider_service.destroy
-    
-    if result[:error]
-      render json: { errors: "Falha na exclusão: #{result[:error]}" }, status: :unprocessable_entity
-    else
-      render json: { message: result[:message] }
+    def show
+      provider, person, address = provider_service.show
+      render json: { provider:, address:, person: }
     end
-  end
 
-  private
+    def update
+      result = provider_service.update(provider_params, person_params, address_params)
 
-  def provider_service
-    @provider_service ||= ProviderService.new(params[:id])
-  end
+      if result[:error]
+        render json: { errors: "Falha na atualização: #{result[:error]}" }, status: :unprocessable_entity
+      else
+        render json: result, status: :ok
+      end
+    end
 
-  def person_params
-    params.require(:person).permit(:name, :email, :phone)
-  end
+    def destroy
+      result = provider_service.destroy
 
-  def address_params
-    params.require(:address).permit(:street, :number, :cep, :observation, :address_type, :city, :state, :neighborhood)
-  end
+      if result[:error]
+        render json: { errors: "Falha na exclusão: #{result[:error]}" }, status: :unprocessable_entity
+      else
+        render json: { message: result[:message] }
+      end
+    end
 
-  def provider_params
-    params.require(:provider).permit(:cnpj, :person_id)
+    private
+
+    def provider_service
+      @provider_service ||= ProviderService.new(params[:id])
+    end
+
+    def person_params
+      params.require(:person).permit(:name, :email, :phone)
+    end
+
+    def address_params
+      params.require(:address).permit(:street, :number, :cep, :observation, :address_type, :city, :state, :neighborhood)
+    end
+
+    def provider_params
+      params.require(:provider).permit(:cnpj, :person_id)
+    end
   end
 end

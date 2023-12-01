@@ -102,7 +102,7 @@ export default function AdminNavbar(props: {
 				<Box mb={{ sm: '8px', md: '0px' }}>
 					<Breadcrumb>
 						<BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-							<BreadcrumbLink href='' color={secondaryText}>
+							<BreadcrumbLink href='/admin/financial' color={secondaryText}>
 								Página Inicial
 							</BreadcrumbLink>
 						</BreadcrumbItem>
