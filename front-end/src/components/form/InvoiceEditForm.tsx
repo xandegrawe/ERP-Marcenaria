@@ -3,7 +3,7 @@ import { GlobalContext } from "contexts/GlobalContext";
 import { useContext, useEffect, useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
-import { updateBankInvoiceApi, getFullBankInvoiceDataApi } from "services/api";
+import { updateBankInvoiceApi, getFullBankInvoiceDataApi, calculateSummarysApi } from "services/api";
 import { BankInvoice } from "types/bankData";
 import { handleInputChange } from "./FormValidations";
 
@@ -46,11 +46,11 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
   const onSubmit = async (data: Partial<BankInvoice> ) => {
     const bankInvoiceData = {
       ...data,
-      id: id 
+      id: id,
+      bank_account_id: initialValues.bank_account_id,
     }
     try {
       const response = await updateBankInvoiceApi(bankInvoiceData);
-      console.log("Updated Invoice Data:", response.data);
       updateInvoice(response.data);
       toast({
         title: "Fatura atualizada com sucesso!",
@@ -67,6 +67,7 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
         isClosable: true,
       });
     }
+    window.location.reload();
   };
 
   const dropdownColor = { 
@@ -149,3 +150,7 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
 }
 
 export default InvoiceEditForm;
+
+function setAccountSummary(arg0: (prev: any) => any) {
+  throw new Error("Function not implemented.");
+}
