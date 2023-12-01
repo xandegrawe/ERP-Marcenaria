@@ -92,7 +92,7 @@ const InvoiceAddRegister = ( {accountId} : InvoiceAddRegisterProps) => {
         <FormControl>
           <InputGroup>
               <InputLeftAddon children='Categoria'/>
-              <Select {...register('category_id')} placeholder='Selecione a Categoria'>
+              <Select {...register('category_id')} placeholder='Selecione a Categoria' sx={dropdownColor}>
                 {categories.map((category: Category) => (
                   <option key={category.id} value={category.id}>{category.name}</option>
                 ))}
