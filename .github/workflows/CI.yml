@@ -51,8 +51,8 @@ jobs:
         run: sudo apt-get install libpq-dev
         working-directory: ./backend
 
-      - name: Instalação das dependências
-        run: gem install rails -v 7.0.4
+      - name: Instalação das dependências do Ruby
+        run: bundle install
         working-directory: ./backend
         
       - name: Criação do banco de dados
