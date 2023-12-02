@@ -1,0 +1,42 @@
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+jobs:
+  rspec-test:
+    name: RSpec
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+      - name: Instalação client postgres
+        run: sudo apt-get install libpq-dev
+      - name: Instalação de dependencias
+        run: |
+          gem install bundler
+          bundler install
+      - name: Criação do banco de dados
+        run: |
+          bundler exec rails db:create RAILS_ENV=test
+          bundler exec rails db:migrate RAILS_ENV=test
+      - name: Execução dos Testes
+        run: bundler exec rspec spec/*
+      - name: Carregando resultado da cobertura
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
