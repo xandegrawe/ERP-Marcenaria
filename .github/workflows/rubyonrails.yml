@@ -1,21 +1,24 @@
 name: CI
 on: push
 jobs:
+
   rubocop:
     name: Rubocop
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Muda para o Backend
-        run: cd backend
+        
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.2"
-          bundler-cache: true
+          working-directory: ./backend
+          budler-cahe: true
+        
       - name: Analyze code
         run: bundle exec rubocop
+        working-directory: ./backend
         
   rspec:
     name: RSpec
@@ -24,32 +27,35 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:example@localhost:5432/db_test
+      
     services:
       postgres:
         image: postgres:latest
         ports: ['5432:5432']
         env:
-          POSTGRES_DB: db_test
+          POSTGRES_DB: db
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: example
+          POSTGRES_PASSWORD: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Muda para o Backend
-        run: cd backend
-        
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.2"
-          bundler-cache: true
+          working-directory: ./backend
+          
       - name: Install postgres client dependencies
         run: sudo apt-get install libpq-dev
+
+      - name: Install dependencies
+        run: bundle install
+        
       - name: Create database
         run: |
           bundle exec rails db:create
           bundle exec rails db:schema:load # ou db:structure:load ou db:migrate
+        
       - name: Execução dos testes
         run: bundle exec rspec spec
