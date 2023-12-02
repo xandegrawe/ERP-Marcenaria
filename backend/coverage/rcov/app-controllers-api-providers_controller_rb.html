@@ -25,9 +25,9 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-api-providers_controller_rb.html">app/controllers/api/providers_controller.rb</a></td>
-            <td class='right_align'><tt>74</tt></td>
+            <td class='right_align'><tt>73</tt></td>
             <td class='right_align'><tt>35</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>95.95%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>95.89%</tt></div>
       <div class="percent_graph">
         <div class="covered" style="width:96px"></div>
         <div class="uncovered" style="width:4px"></div>
@@ -182,100 +182,97 @@
         <tr class="inferred">
           <td><pre><a name="line45">45</a> </pre></td>
         </tr>
-        <tr class="inferred">
-          <td><pre><a name="line46">46</a> </pre></td>
+        <tr class="marked">
+          <td><pre><a name="line46">46</a>     def destroy</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line47">47</a>     def destroy</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line48">48</a>       result = provider_service.destroy</pre></td>
+          <td><pre><a name="line47">47</a>       result = provider_service.destroy</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line49">49</a> </pre></td>
+          <td><pre><a name="line48">48</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line50">50</a>       if result[:error]</pre></td>
+          <td><pre><a name="line49">49</a>       if result[:error]</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line51">51</a>         render json: { errors: &quot;Falha na exclusão: #{result[:error]}&quot; }, status: :unprocessable_entity</pre></td>
+          <td><pre><a name="line50">50</a>         render json: { errors: &quot;Falha na exclusão: #{result[:error]}&quot; }, status: :unprocessable_entity</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line52">52</a>       else</pre></td>
+          <td><pre><a name="line51">51</a>       else</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line53">53</a>         render json: { message: result[:message] }</pre></td>
+          <td><pre><a name="line52">52</a>         render json: { message: result[:message] }</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line54">54</a>       end</pre></td>
+          <td><pre><a name="line53">53</a>       end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line55">55</a>     end</pre></td>
+          <td><pre><a name="line54">54</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line56">56</a> </pre></td>
+          <td><pre><a name="line55">55</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line57">57</a>     private</pre></td>
+          <td><pre><a name="line56">56</a>     private</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line58">58</a> </pre></td>
+          <td><pre><a name="line57">57</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line59">59</a>     def provider_service</pre></td>
+          <td><pre><a name="line58">58</a>     def provider_service</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line60">60</a>       @provider_service ||= ProviderService.new(params[:id])</pre></td>
+          <td><pre><a name="line59">59</a>       @provider_service ||= ProviderService.new(params[:id])</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line61">61</a>     end</pre></td>
+          <td><pre><a name="line60">60</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line62">62</a> </pre></td>
+          <td><pre><a name="line61">61</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line63">63</a>     def person_params</pre></td>
+          <td><pre><a name="line62">62</a>     def person_params</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line64">64</a>       params.require(:person).permit(:name, :email, :phone)</pre></td>
+          <td><pre><a name="line63">63</a>       params.require(:person).permit(:name, :email, :phone)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line65">65</a>     end</pre></td>
+          <td><pre><a name="line64">64</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line66">66</a> </pre></td>
+          <td><pre><a name="line65">65</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line67">67</a>     def address_params</pre></td>
+          <td><pre><a name="line66">66</a>     def address_params</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line68">68</a>       params.require(:address).permit(:street, :number, :cep, :observation, :address_type, :city, :state, :neighborhood)</pre></td>
+          <td><pre><a name="line67">67</a>       params.require(:address).permit(:street, :number, :cep, :observation, :address_type, :city, :state, :neighborhood)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line69">69</a>     end</pre></td>
+          <td><pre><a name="line68">68</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line70">70</a> </pre></td>
+          <td><pre><a name="line69">69</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line71">71</a>     def provider_params</pre></td>
+          <td><pre><a name="line70">70</a>     def provider_params</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line72">72</a>       params.require(:provider).permit(:cnpj, :person_id)</pre></td>
+          <td><pre><a name="line71">71</a>       params.require(:provider).permit(:cnpj, :person_id)</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line73">73</a>     end</pre></td>
+          <td><pre><a name="line72">72</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line74">74</a>   end</pre></td>
+          <td><pre><a name="line73">73</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line75">75</a> end</pre></td>
+          <td><pre><a name="line74">74</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-12-01 21:12:40 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.1</a></p>
+    <p>Generated on 2023-12-02 17:34:12 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.1</a></p>
 
   </body>
 </html>

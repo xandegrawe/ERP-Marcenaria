@@ -71,12 +71,13 @@ const SubNavbar = () => {
   };
 
   return (
-    <Tabs isLazy
+    <Tabs
       variant='enclosed-colored'
       marginTop={'2%'}
     >
       <TabList >
         {bankAccounts.map((account: Account) => (
+          console.log(account),
           <Tab 
             key={account.id}
             onClick={() => handleTabChange(account.id)}

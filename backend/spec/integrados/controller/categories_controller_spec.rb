@@ -13,21 +13,23 @@ RSpec.describe Api::CategoriesController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    it 'retorna uma categoria específica' do
-      categoria = categorias.first
-      get :show, params: { id: categoria.id }
-      expect(response).to be_successful
-      expect(JSON.parse(response.body)['id']).to eq(categoria.id)
-    end
-  end
-
   describe 'POST #create' do
     context 'com parâmetros válidos' do
       it 'cria uma nova Categoria' do
         expect do
           post :create, params: { category: { name: 'Nova Categoria' } }
         end.to change(Category, :count).by(1)
+        expect(response).to be_successful
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    context 'com parâmetros válidos' do
+      it 'deleta a Categoria' do
+        expect do
+          delete :destroy, params: { id: categorias.first.id }
+        end.to change(Category, :count).by(-1)
         expect(response).to be_successful
       end
     end

@@ -1,12 +1,11 @@
 import { SimpleGrid, FormControl, InputGroup, InputLeftAddon, Input, Select, useColorModeValue, Button, useToast, useDisclosure } from "@chakra-ui/react";
 import { GlobalContext } from "contexts/GlobalContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { createBankInvoice } from "services/api";
 import { BankInvoice } from "types/bankData";
-import AddCategoryModal from "./CategoriesRegisterForm";
-import { handleInputChange } from "./FormValidations";
+import { convertStatus, handleInputChange } from "./FormValidations";
 
 interface Category {
   id: number;
@@ -27,12 +26,18 @@ const InvoiceAddRegister = ( {accountId} : InvoiceAddRegisterProps) => {
   const textInputColor = useColorModeValue('gray.700', 'white');
   const toast = useToast();
   const { addInvoice, people, categories} = useContext(GlobalContext);
-  
+
   const onSubmit = async (data: Partial<BankInvoice> ) => {
     try {
       const completeData = { ...data, bank_account_id: accountId };
       const response = await createBankInvoice(completeData);
-      addInvoice(response.data);
+     
+      addInvoice(
+        {
+          ...response.data,
+          status: convertStatus(response.data.status),
+        }
+      );
       toast({
         title: "Fatura criada com sucesso!",
         status: "success",

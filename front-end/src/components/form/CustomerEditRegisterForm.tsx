@@ -21,19 +21,20 @@ export default function CustomerEditRegisterForm({ initialValues, onClose }: For
         let customer = customerData.data.customer;
         let person = customerData.data.person;
         let customer_address = customerData.data.address;
+        debugger
         setValue('name', person.name);
         setValue('email', person.email);
-        setValue('phone', formatPhone(person.phone));
-        setValue('last_name', customer.last_name);
-        setValue('cpf', formatCpf(customer.cpf));
-        setValue('rg', formatRg(customer.rg));
-        setValue('cep', formatCep(customer_address.cep));
-        setValue('state', customer_address.state);
-        setValue('city', customer_address.city);
-        setValue('neighborhood', customer_address.neighborhood);
-        setValue('street', customer_address.street);
-        setValue('number', customer_address.number);
-        setValue('observation', customer_address.observation);
+        setValue('phone', formatPhone(person?.phone));
+        setValue('last_name', customer?.last_name);
+        setValue('cpf', formatCpf(customer?.cpf));
+        setValue('rg', formatRg(customer?.rg));
+        setValue('cep', formatCep(customer_address?.cep))
+        setValue('state', customer_address?.state);
+        setValue('city', customer_address?.city);
+        setValue('neighborhood', customer_address?.neighborhood);
+        setValue('street', customer_address?.street);
+        setValue('number', customer_address?.number);
+        setValue('observation', customer_address?.observation);
       }
     };
 

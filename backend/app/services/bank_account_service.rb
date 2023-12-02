@@ -11,14 +11,11 @@ class BankAccountService < ApplicationController
     ActiveRecord::Base.transaction do
       inicial_balance = formated_balance(bank_account_params[:inicial_balance])
       name = bank_account_params[:name]
-      bank_account = BankAccount.new(name:, inicial_balance:)
-
-      return bank_account if bank_account.save
-
-      return { error: bank_account.errors.full_messages.to_sentence }
+      bank_account = BankAccount.create(name: name, inicial_balance: inicial_balance)
+      bank_account
+    rescue ActiveRecord::RecordInvalid => e
+      { error: e.message }
     end
-  rescue StandardError => e
-    { error: "Erro inesperado: #{e.message}" }
   end
 
   def formated_balance(inicial_balance)

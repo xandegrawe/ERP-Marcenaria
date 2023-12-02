@@ -2,10 +2,17 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { AiOutlineExclamation } from "react-icons/ai";
 
 export const formatCep = (value) => {
+  if (value == null) {
+    return '';
+  }
   return value.replace(/\D/g, '').replace(/(\d{5})(\d{1,3})/, '$1-$2');
 };
 
 export const formatCpf = (value) => {
+  if (value == null) {
+    return '';
+  }
+
   value = value.replace(/\D/g, '');
   if (value.length > 9) {
     return value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
@@ -55,6 +62,16 @@ export const formatPhone = (value) => {
   return value.replace(/(\d{2})/, '($1');
 }
 
+export const convertStatus = (status) => {
+  if (status === 0) {
+    return "Entrada"
+  } else if (status === 1) {
+    return "Saída"
+  } else {
+    return "Pendente"
+  }
+}
+
 export const formatBalance = (value) => {
   value = value.replace(/\D/g, '');
 
@@ -74,10 +91,10 @@ export function selectIcon(status) {
 }
 
 export function formatPrice(price, status) {
-  if (status === "2") {
+  if (status === "2" || status === "Pendente") {
     price = "Pendente"
     return price
-  } else if (status === "0") {
+  } else if (status === "0" || status === "Entrada") {
     return `+ R$ ${price}`
   }
   else {

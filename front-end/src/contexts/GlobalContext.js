@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { set } from 'react-hook-form';
 import { listCustomersApi, listProvidersApi, listBankAccountsApi, listBankInvoicesApi, listCategoriesApi, listPeopleApi} from 'services/api';
 
 export const GlobalContext = createContext();
@@ -89,6 +88,10 @@ export const GlobalProvider = ({ children }) => {
     setProviders(prev => prev.map(provider => provider.id === updatedProvider.id ? updatedProvider : provider));
   };
 
+  const deleteCategory = (categoryId) => {
+    setCategories(prev => prev.filter(category => category.id !== categoryId));
+  }
+
   const deleteProvider = (customerId) => {
     setProviders(prev => prev.filter(provider => provider.id !== customerId));
   };
@@ -149,6 +152,7 @@ export const GlobalProvider = ({ children }) => {
         
         categories,
         addCategory,
+        deleteCategory,
 
         people,
         selectedAccountId,

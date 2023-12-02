@@ -6,15 +6,15 @@ ActiveRecord::Schema[7.0].define(version: 20_231_126_223_538) do
   create_table 'addresses', force: :cascade do |t|
     t.string 'street'
     t.string 'number'
-    t.string 'cep', null: false
-    t.text 'observation', null: false
-    t.string 'address_type', null: false
+    t.string 'cep'
+    t.text 'observation'
+    t.string 'address_type'
     t.bigint 'person_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'city', null: false
-    t.string 'state', null: false
-    t.string 'neighborhood', null: false
+    t.string 'city'
+    t.string 'state'
+    t.string 'neighborhood'
     t.index ['person_id'], name: 'index_addresses_on_person_id'
   end
 

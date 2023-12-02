@@ -5,13 +5,13 @@ import { useContext, useMemo } from "react";
 import { BankInvoice } from "types/bankData";
 import { selectIcon } from "components/form/FormValidations";
 
-const Form = () => {  
+const TransactionsTable = () => {  
   const bgColor = useColorModeValue("white", "gray.700")
   const textColor = useColorModeValue('gray.700', 'white');
   const { invoices, selectedAccountId } = useContext(GlobalContext);
 
   const filteredInvoices = useMemo(() => {
-    return invoices.filter((invoice: { bank_account_id: any; }) => 
+    return invoices.filter((invoice: { bank_account_id: number; }) => 
       String(invoice.bank_account_id) === String(selectedAccountId)
     );
   }, [invoices, selectedAccountId]);
@@ -114,4 +114,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default TransactionsTable;

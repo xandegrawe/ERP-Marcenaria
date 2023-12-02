@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
-    <title>app/serializers/provider_serializer.rb</title>
+    <title>app/serializers/category_serializer.rb</title>
     <link href="./assets/0.3.1/screen.css" media="all" rel="stylesheet" type="text/css" />
     <link href="./assets/0.3.1/print.css" media="print" rel="stylesheet" type="text/css" />
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
@@ -9,7 +9,7 @@
   </head>
   <body>
     <h1>Backend C0 Coverage Information - Simploco - RCov</h1>
-    <h2>app/serializers/provider_serializer.rb</h2>
+    <h2>app/serializers/category_serializer.rb</h2>
 
     <div class="report_table_wrapper">
       <table class='report' id='report_table'>
@@ -24,8 +24,8 @@
         </thead>
         <tbody>
           <tr>
-            <td class="left_align"><a href="app-serializers-provider_serializer_rb.html">app/serializers/provider_serializer.rb</a></td>
-            <td class='right_align'><tt>5</tt></td>
+            <td class="left_align"><a href="app-serializers-category_serializer_rb.html">app/serializers/category_serializer.rb</a></td>
+            <td class='right_align'><tt>3</tt></td>
             <td class='right_align'><tt>2</tt></td>
             <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
       <div class="percent_graph">
@@ -50,20 +50,14 @@
 
     <table class="details">
       <tbody>
-        <tr class="inferred">
-          <td><pre><a name="line2">2</a> # frozen_string_literal: true</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line3">3</a> </pre></td>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> class CategorySerializer &lt; ActiveModel::Serializer</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line4">4</a> class ProviderSerializer &lt; ActiveModel::Serializer</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line5">5</a>   attributes :id, :cnpj, :person_id</pre></td>
+          <td><pre><a name="line3">3</a>   attributes  :id, :name</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line6">6</a> end</pre></td>
+          <td><pre><a name="line4">4</a> end</pre></td>
         </tr>
       </tbody>
     </table>

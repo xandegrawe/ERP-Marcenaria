@@ -115,6 +115,7 @@ export const updateProviderApi = (id: number, formData: Partial<PersonData>) => 
 export const createBankAccountApi = (formData: Partial<BankAccount>) => {
   const requestData = {
     bank_account: {
+      id: formData.id,
       name: formData.name,
       inicial_balance: formData.inicial_balance,
     },
@@ -175,3 +176,5 @@ export const listCategoriesApi = () => axios.get<Category[]>(`${process.env.REAC
 export const listPeopleApi = () => axios.get<PersonData[]>(`${process.env.REACT_APP_API_URL}/api/people`, { headers })
 
 export const calculateSummarysApi = (id: number) => axios.get(`${process.env.REACT_APP_API_URL}/api/bank_invoices/${id}/calculate_summary`, { headers });
+
+export const deleteCategoryApi = (id: number) => axios.delete(`${process.env.REACT_APP_API_URL}/api/categories/${id}`, { headers });

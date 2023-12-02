@@ -7,28 +7,34 @@ module Api
       render json: categories
     end
 
-    def show
-      category = select_category
-      render json: category
+    def create
+      result = category_service.create(params[:category]['name'])
+
+      if result[:error]
+        render json: { errors: "Falha na criação: #{result[:error]}" }, status: :unprocessable_entity
+      else
+        render json: result, status: :created
+      end
     end
 
-    def create
-      category = Category.new(category_params)
-      if category.save
-        render json: category
+    def destroy
+      result = category_service.destroy(category_params)
+
+      if result[:error]
+        render json: { errors: "Falha na exclusão: #{result[:error]}" }, status: :unprocessable_entity
       else
-        render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
+        render json: result, status: :ok
       end
     end
 
     private
 
     def category_params
-      params.require(:category).permit(:name)
+      params.permit(:name, :id)
     end
 
-    def select_category
-      Category.find(params[:id])
+    def category_service
+      @category_service ||= CategoryService.new(params[:id])
     end
   end
 end

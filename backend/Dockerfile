@@ -4,14 +4,14 @@ RUN apt-get update -qq && apt-get install -y build-essential nodejs npm libpq-de
 
 RUN npm install -g yarn
 
-RUN mkdir /usr/src/backend
-
 WORKDIR /usr/src/backend
 
-COPY Gemfile Gemfile.lock ./
+ADD ./backend /usr/src/backend
+
+RUN gem install bundler
 
 RUN bundle install
 
-EXPOSE 3000
+EXPOSE 8080
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "8080"]

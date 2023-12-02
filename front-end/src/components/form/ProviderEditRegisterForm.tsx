@@ -54,7 +54,6 @@ export default function ProviderEditRegisterForm({ initialValues, onClose }: For
 
   const onSubmit = async (data: Partial<PersonData>) => {
     try {
-      debugger
       await updateProviderApi(id, data);
       toast({
         title: "Fornecedor atualizado com sucesso!",

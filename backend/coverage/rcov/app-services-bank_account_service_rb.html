@@ -25,17 +25,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-services-bank_account_service_rb.html">app/services/bank_account_service.rb</a></td>
-            <td class='right_align'><tt>54</tt></td>
-            <td class='right_align'><tt>29</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>87.04%</tt></div>
+            <td class='right_align'><tt>51</tt></td>
+            <td class='right_align'><tt>28</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>88.24%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:87px"></div>
-        <div class="uncovered" style="width:13px"></div>
+        <div class="covered" style="width:88px"></div>
+        <div class="uncovered" style="width:12px"></div>
       </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>75.86%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>78.57%</tt></div>
       <div class="percent_graph">
-        <div class="covered" style="width:76px"></div>
-        <div class="uncovered" style="width:24px"></div>
+        <div class="covered" style="width:79px"></div>
+        <div class="uncovered" style="width:21px"></div>
       </div></td>
           </tr>
         </tbody>
@@ -90,132 +90,123 @@
           <td><pre><a name="line14">14</a>       name = bank_account_params[:name]</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line15">15</a>       bank_account = BankAccount.new(name:, inicial_balance:)</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line16">16</a> </pre></td>
+          <td><pre><a name="line15">15</a>       bank_account = BankAccount.create(name: name, inicial_balance: inicial_balance)</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line17">17</a>       return bank_account if bank_account.save</pre></td>
+          <td><pre><a name="line16">16</a>       bank_account</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line18">18</a> </pre></td>
+          <td><pre><a name="line17">17</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line19">19</a>       return { error: bank_account.errors.full_messages.to_sentence }</pre></td>
+          <td><pre><a name="line18">18</a>       { error: e.message }</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line20">20</a>     end</pre></td>
+          <td><pre><a name="line19">19</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line21">21</a>   rescue StandardError =&gt; e</pre></td>
+          <td><pre><a name="line20">20</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line22">22</a>   def formated_balance(inicial_balance)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line23">23</a>     formated_balance = inicial_balance.gsub(/(?&lt;=\d)\.(?=\d{3}(?:,|$))/, &#39;&#39;)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line24">24</a>     formated_balance = formated_balance.gsub(&#39;,&#39;, &#39;.&#39;)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line25">25</a>     formated_balance.to_f</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line27">27</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line28">28</a>   def show</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line22">22</a>     { error: &quot;Erro inesperado: #{e.message}&quot; }</pre></td>
+          <td><pre><a name="line29">29</a>     BankAccount.find(params[:id])</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line23">23</a>   end</pre></td>
+          <td><pre><a name="line30">30</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line24">24</a> </pre></td>
+          <td><pre><a name="line31">31</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line25">25</a>   def formated_balance(inicial_balance)</pre></td>
+          <td><pre><a name="line32">32</a>   def destroy(bank_account)</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line26">26</a>     formated_balance = inicial_balance.gsub(/(?&lt;=\d)\.(?=\d{3}(?:,|$))/, &#39;&#39;)</pre></td>
+          <td><pre><a name="line33">33</a>     ActiveRecord::Base.transaction do</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line27">27</a>     formated_balance = formated_balance.gsub(&#39;,&#39;, &#39;.&#39;)</pre></td>
+          <td><pre><a name="line34">34</a>       bank_account.bank_invoices.destroy_all</pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line28">28</a>     formated_balance.to_f</pre></td>
+          <td><pre><a name="line35">35</a>       bank_account.destroy!</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line29">29</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line30">30</a> </pre></td>
+          <td><pre><a name="line36">36</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line31">31</a>   def show</pre></td>
+          <td><pre><a name="line37">37</a>       { success: true, message: &#39;Conta excluída com sucesso.&#39; }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line38">38</a>     rescue ActiveRecord::RecordNotDestroyed =&gt; e</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line32">32</a>     BankAccount.find(params[:id])</pre></td>
+          <td><pre><a name="line39">39</a>       { success: false, error: &quot;Falha ao excluir a conta e suas faturas: #{e.record.errors.full_messages.to_sentence}&quot; }</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line33">33</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line34">34</a> </pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line35">35</a>   def destroy(bank_account)</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line36">36</a>     ActiveRecord::Base.transaction do</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line37">37</a>       bank_account.bank_invoices.destroy_all</pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line38">38</a>       bank_account.destroy!</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line39">39</a> </pre></td>
-        </tr>
-        <tr class="marked">
-          <td><pre><a name="line40">40</a>       { success: true, message: &#39;Conta excluída com sucesso.&#39; }</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line41">41</a>     rescue ActiveRecord::RecordNotDestroyed =&gt; e</pre></td>
+          <td><pre><a name="line40">40</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line42">42</a>       { success: false, error: &quot;Falha ao excluir a conta e suas faturas: #{e.record.errors.full_messages.to_sentence}&quot; }</pre></td>
+          <td><pre><a name="line41">41</a>       { success: false, error: &quot;Falha ao excluir a conta: #{e.message}&quot; }</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line43">43</a>     rescue ActiveRecord::RecordInvalid =&gt; e</pre></td>
+          <td><pre><a name="line42">42</a>     rescue StandardError =&gt; e</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line44">44</a>       { success: false, error: &quot;Falha ao excluir a conta: #{e.message}&quot; }</pre></td>
+          <td><pre><a name="line43">43</a>       { success: false, error: &quot;Erro inesperado: #{e.message}&quot; }</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line45">45</a>     rescue StandardError =&gt; e</pre></td>
-        </tr>
-        <tr class="uncovered">
-          <td><pre><a name="line46">46</a>       { success: false, error: &quot;Erro inesperado: #{e.message}&quot; }</pre></td>
+          <td><pre><a name="line44">44</a>     end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line47">47</a>     end</pre></td>
+          <td><pre><a name="line45">45</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line48">48</a>   end</pre></td>
-        </tr>
-        <tr class="inferred">
-          <td><pre><a name="line49">49</a> </pre></td>
+          <td><pre><a name="line46">46</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line50">50</a>   private</pre></td>
+          <td><pre><a name="line47">47</a>   private</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line51">51</a> </pre></td>
+          <td><pre><a name="line48">48</a> </pre></td>
         </tr>
         <tr class="marked">
-          <td><pre><a name="line52">52</a>   def select_bank_account(params)</pre></td>
+          <td><pre><a name="line49">49</a>   def select_bank_account(params)</pre></td>
         </tr>
         <tr class="uncovered">
-          <td><pre><a name="line53">53</a>     BankAccount.find(params[:id])</pre></td>
+          <td><pre><a name="line50">50</a>     BankAccount.find(params[:id])</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line54">54</a>   end</pre></td>
+          <td><pre><a name="line51">51</a>   end</pre></td>
         </tr>
         <tr class="inferred">
-          <td><pre><a name="line55">55</a> end</pre></td>
+          <td><pre><a name="line52">52</a> end</pre></td>
         </tr>
       </tbody>
     </table>
 
-    <p>Generated on 2023-12-01 21:12:40 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.1</a></p>
+    <p>Generated on 2023-12-02 17:34:12 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.1</a></p>
 
   </body>
 </html>

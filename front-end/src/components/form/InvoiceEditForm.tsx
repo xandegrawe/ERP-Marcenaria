@@ -1,11 +1,10 @@
 import { SimpleGrid, FormControl, InputGroup, InputLeftAddon, Input, Select, useColorModeValue, Button, useToast, useDisclosure, ModalHeader, Container, ModalBody, ModalFooter, UseDisclosureReturn } from "@chakra-ui/react";
 import { GlobalContext } from "contexts/GlobalContext";
-import { useContext, useEffect, useState } from "react";
-import { set, useForm } from "react-hook-form";
-import { FaPlus } from "react-icons/fa";
-import { updateBankInvoiceApi, getFullBankInvoiceDataApi, calculateSummarysApi } from "services/api";
+import { useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { updateBankInvoiceApi, getFullBankInvoiceDataApi } from "services/api";
 import { BankInvoice } from "types/bankData";
-import { handleInputChange } from "./FormValidations";
+import { convertStatus, handleInputChange} from "./FormValidations";
 
 interface Category {
   id: number;
@@ -43,6 +42,7 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
     fetchBankInvoiceData();
   }, [id, initialValues, setValue]);
 
+
   const onSubmit = async (data: Partial<BankInvoice> ) => {
     const bankInvoiceData = {
       ...data,
@@ -51,7 +51,11 @@ const InvoiceEditForm = ({ initialValues, onClose }: InvoiceAddRegisterProps) =>
     }
     try {
       const response = await updateBankInvoiceApi(bankInvoiceData);
-      updateInvoice(response.data);
+      const updatedInvoice = {
+        ...response.data,
+        status: convertStatus(response.data.status),
+      };
+      updateInvoice(updatedInvoice);
       toast({
         title: "Fatura atualizada com sucesso!",
         status: "success",

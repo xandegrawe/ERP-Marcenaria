@@ -9,7 +9,12 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3001'
+    origins "http://localhost:3001"
+            # "https://legratech.vercel.app",
+            # "legratech.vercel.app",
+            # "legratech.fly.dev",
+            # "localhost:3000",
+            # "localhost:3001"
 
     resource '*',
              headers: :any,
@@ -17,19 +22,3 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
              expose: %w[access-token expiry token-type uid client]
   end
 end
-
-# Rails.application.config.middleware.insert_before 0, Rack::Cors do
-#   allow do
-#     origins "http://localhost:3001",
-#             "https://legratech.vercel.app",
-#             "legratech.vercel.app",
-#             "legratech.fly.dev",
-#             "localhost:3000",
-#             "localhost:3001"
-
-#     resource "*",
-#       headers: :any,
-#       methods: [:get, :post, :put, :patch, :delete, :options, :head],
-#       expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
-#   end
-# end

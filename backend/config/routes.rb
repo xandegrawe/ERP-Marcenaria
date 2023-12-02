@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :categories, only: %i[index show create]
+    resources :categories, only: %i[index show create destroy]
     resources :people, only: %i[index show]
   end
 

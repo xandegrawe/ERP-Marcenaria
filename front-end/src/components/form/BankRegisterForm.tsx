@@ -1,11 +1,12 @@
-import { PhoneIcon } from '@chakra-ui/icons';
-import { Button, Container, FormControl, FormLabel, Input, InputGroup, InputLeftElement, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Text, UseDisclosureReturn, useColorModeValue, useToast} from '@chakra-ui/react'
+
+import { Button, FormControl, FormLabel, Input, ModalBody, ModalFooter, ModalHeader, SimpleGrid, Text, UseDisclosureReturn, useColorModeValue, useToast} from '@chakra-ui/react'
 import { GlobalContext } from 'contexts/GlobalContext';
 import { useContext} from 'react';
 import { useForm } from 'react-hook-form';
 import { createBankAccountApi } from 'services/api';
 import { BankAccount } from 'types/bankData';
-import { handleInputChange } from './FormValidations';
+import {  handleInputChange } from './FormValidations';
+
 
 
 export default function BankRegisterForm({ onClose }: { onClose: UseDisclosureReturn['onClose'] }) {
@@ -13,7 +14,7 @@ export default function BankRegisterForm({ onClose }: { onClose: UseDisclosureRe
   const toast = useToast()
   const { register, setValue, handleSubmit} = useForm();
   const { addBankAccount } = useContext(GlobalContext);
-
+  
   const onSubmit = async (data: Partial<BankAccount>) => {
     try {
       const response = await createBankAccountApi(data);
