@@ -18,8 +18,7 @@ jobs:
         
       - name: Analyze code
         run: bundle exec rubocop
-        working-directory: ./backend
-        
+
   rspec:
     name: RSpec
     needs: rubocop
@@ -40,22 +39,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.2"
+          bundle-cache: true
           working-directory: ./backend
           
-      - name: Install postgres client dependencies
+      - name: Instalação das dependências postgres
         run: sudo apt-get install libpq-dev
-
-      - name: Install dependencies
-        run: bundle install
         
-      - name: Create database
+      - name: Criação do banco de dados
         run: |
           bundle exec rails db:create
-          bundle exec rails db:schema:load # ou db:structure:load ou db:migrate
+          bundle exec rails db:migrate
         
       - name: Execução dos testes
         run: bundle exec rspec spec
