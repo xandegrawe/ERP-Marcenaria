@@ -55,6 +55,7 @@ jobs:
         run: |
           bundle exec rails db:create
           bundle exec rails db:migrate
-        
+        working-directory: ./backend
+
       - name: Execução dos testes
         run: bundle exec rspec spec
