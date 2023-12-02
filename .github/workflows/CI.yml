@@ -45,8 +45,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.2"
-          bundle-cache: true
           working-directory: ./backend
+          bundle-cache: true
           
       - name: Instalação das dependências postgres
         run: sudo apt-get install libpq-dev
