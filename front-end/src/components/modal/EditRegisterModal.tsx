@@ -1,9 +1,8 @@
-import { Button, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { Button, Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react'
 import CustomerEditRegisterForm from 'components/form/CustomerEditRegisterForm'
 import InvoiceEditForm from 'components/form/InvoiceEditForm'
 import ProviderEditRegisterForm from 'components/form/ProviderEditRegisterForm'
-import React, { useState } from 'react'
-import { FaEdit, FaPlus } from 'react-icons/fa'
+import { FaEdit} from 'react-icons/fa'
 import { BankInvoice } from 'types/bankData'
 import { PersonData } from 'types/personData'
 
