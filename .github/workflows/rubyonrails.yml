@@ -10,7 +10,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: "3.2.2"
           bundler-cache: true
       - name: Analyze code
         run: bundle exec rubocop
@@ -36,7 +36,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: "3.2.2"
           bundler-cache: true
       - name: Install postgres client dependencies
         run: sudo apt-get install libpq-dev
