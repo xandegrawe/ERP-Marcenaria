@@ -74,9 +74,9 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 <h3>Diagrama de Arquiterura de Software</h3>
 
 
-![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/mvc.png)
+![](https://github.com/xandegrawe/LeGraTech/blob/main/Documenta%C3%A7%C3%A3o/arquitetura.png)
 
-<p>MVC com padrão repository</p>
+<p>MVC com padrão Service </p>
 
 ---
 
@@ -87,19 +87,39 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 
 <h3>Frontend</h3>
   
-  - React JS
+  - React Typescipt
     
 <h3>Banco de Dados</h3>
 
   - Postgresql
 
-<h3>Servidor</h3>
-
-  - Puma
-
 <h3>Infraestrutura</h3>
 
-- CI/CD do GitHub Actions
+- Frontend Deploy - Vercel
 
-# Acompanhe o projeto
+- Backend Deploy - Fly.io
+
+<h3>Monitoramento</h3>
+
+- Monitoramento - fly.io/graphana
+  
+  [clique aqui para ver o monitoramento](https://fly-metrics.net/d/fly-app/fly-app?orgId=359069&var-app=legratech&from=1701538017602&to=1701541617602)
+
+<h3> Testes </h3>
+
+  -  Rspec
+  
+  - SimpleCoverage
+    
+  - Rubocop
+    
+  - Ruby Audit
+
+  [Acesse a página de cobertura do sistema](https://coverage-zeta.vercel.app/#_AllFiles)
+
+## Acompanhe o andamento do projeto
 [Kanban / Projeto](https://github.com/users/xandegrawe/projects/1/views/1)
+
+
+# Acesse o projeto
+[Legratech app](https://legratech.vercel.app/admin/financial)
