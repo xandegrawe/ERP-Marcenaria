@@ -107,6 +107,8 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 
 <h3> Testes </h3>
 
+  - ESLint
+
   -  Rspec
   
   - SimpleCoverage
