@@ -1,12 +1,12 @@
 name: "Ruby on Rails CI"
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   rspec-test:
-    name: RSpec 
+    name: RSpec
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -18,7 +18,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
     steps:
-      - uses: actions/checkou@v1
+      - uses: actions/checkout@v1
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: 3.2.2
@@ -35,7 +35,7 @@ jobs:
       - name: Execução dos Testes
         run: bundler exec rspec spec/*
       - name: Carregando resultado da cobertura
-        uses: actions?upload-artifact@master
+        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: coverage-report
