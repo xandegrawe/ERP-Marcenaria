@@ -99,6 +99,8 @@ Este sistema é disponibilizado como um Software como Serviço (SaaS), permitind
 
 - Backend Deploy - Fly.io
 
+- CI/DC Github Actions
+
 <h3>Monitoramento</h3>
 
 - Monitoramento - fly.io/graphana
