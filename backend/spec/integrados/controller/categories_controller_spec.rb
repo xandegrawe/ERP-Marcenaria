@@ -24,7 +24,7 @@ RSpec.describe Api::CategoriesController, type: :controller do
     end
   end
 
-  describe "DELETE #destroy" do
+  describe 'DELETE #destroy' do
     context 'com parâmetros válidos' do
       it 'deleta a Categoria' do
         expect do

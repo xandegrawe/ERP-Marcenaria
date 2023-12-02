@@ -9,12 +9,12 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:3001"
-            # "https://legratech.vercel.app",
-            # "legratech.vercel.app",
-            # "legratech.fly.dev",
-            # "localhost:3000",
-            # "localhost:3001"
+    origins 'http://localhost:3001',
+            'https://legratech.vercel.app',
+            'legratech.vercel.app',
+            'legratech.fly.dev',
+            'localhost:3000',
+            'localhost:3001'
 
     resource '*',
              headers: :any,

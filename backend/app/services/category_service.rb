@@ -14,7 +14,7 @@ class CategoryService < ApplicationController
     end
   end
 
-  def destroy(category_params)
+  def destroy(_category_params)
     category = select_category
     ActiveRecord::Base.transaction do
       BankInvoice.where(category_id: category.id).update_all(category_id: nil)
@@ -28,7 +28,6 @@ class CategoryService < ApplicationController
   private
 
   def select_category
-    category = Category.find(@id)
-    category
+    Category.find(@id)
   end
 end

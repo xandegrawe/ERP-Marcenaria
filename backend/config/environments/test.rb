@@ -13,13 +13,13 @@ Rails.application.configure do
   # Turn false under Spring and add config.action_view.cache_template_loading = true.
   config.cache_classes = true
 
-  # config.hosts = [
-  #   "https://legratech.vercel.app",
-  #   "legratech.vercel.app",
-  #   "legratech.fly.dev",
-  #   "localhost:3000",
-  #   "localhost:3001",
-  # ]
+  config.hosts = [
+    'https://legratech.vercel.app',
+    'legratech.vercel.app',
+    'legratech.fly.dev',
+    'localhost:3000',
+    'localhost:3001'
+  ]
 
   # Eager loading loads your whole application. When running a single test locally,
   # this probably isn't necessary. It's a good idea to do in a continuous integration

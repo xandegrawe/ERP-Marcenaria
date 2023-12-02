@@ -11,7 +11,7 @@ class BankAccountService < ApplicationController
     ActiveRecord::Base.transaction do
       inicial_balance = formated_balance(bank_account_params[:inicial_balance])
       name = bank_account_params[:name]
-      bank_account = BankAccount.create(name: name, inicial_balance: inicial_balance)
+      bank_account = BankAccount.create(name:, inicial_balance:)
       bank_account
     rescue ActiveRecord::RecordInvalid => e
       { error: e.message }

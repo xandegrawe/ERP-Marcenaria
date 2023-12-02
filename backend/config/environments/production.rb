@@ -17,13 +17,13 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
 
-  # config.hosts = [
-  #   "https://legratech.vercel.app",
-  #   "legratech.vercel.app",
-  #   "legratech.fly.dev",
-  #   "localhost:3000",
-  #   "localhost:3001",
-  # ]
+  config.hosts = [
+    'https://legratech.vercel.app',
+    'legratech.vercel.app',
+    'legratech.fly.dev',
+    'localhost:3000',
+    'localhost:3001'
+  ]
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
