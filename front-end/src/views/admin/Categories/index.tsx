@@ -3,7 +3,6 @@ import { FaTrash } from 'react-icons/fa';
 import PeopleTable from 'components/tables/PeopleTable';
 import { useContext} from 'react';
 import { deleteCategoryApi } from 'services/api';
-import EditRegisterModal from 'components/modal/EditRegisterModal';
 import { GlobalContext } from 'contexts/GlobalContext';
 import { Category } from 'types/bankData';
 
@@ -42,7 +41,10 @@ export default function CatagoriesTable() {
   
   return (
 		<Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
-			<SimpleGrid mb='20px' columns={{ sm: 0, md: 0 }} spacing={{ base: '20px', xl: '20px' }}>
+			<SimpleGrid mb='20px'
+				columns={{ sm: 0, md: 0 }}
+				spacing={{ base: '20px', xl: '20px' }}
+			>
 				<PeopleTable
 				peopleData={categories}
 				tableColumns={tableColumns}
