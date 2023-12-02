@@ -18,6 +18,7 @@ jobs:
         
       - name: Analyze code
         run: bundle exec rubocop
+        working-directory: ./backend
 
   rspec:
     name: RSpec
