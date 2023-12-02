@@ -5,6 +5,8 @@ jobs:
     name: Rubocop
     runs-on: ubuntu-20.04
     steps:
+      - name: Change to backend directory
+        run: cd backend
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Ruby
@@ -12,8 +14,6 @@ jobs:
         with:
           ruby-version: "3.2.2"
           bundler-cache: true
-      - name: Change to backend directory
-        run: cd backend
       - name: Analyze code
         run: bundle exec rubocop
   rspec:
@@ -33,6 +33,8 @@ jobs:
           POSTGRES_PASSWORD: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
+      - name: Change to backend directory
+        run: cd backend
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Ruby
@@ -40,8 +42,6 @@ jobs:
         with:
           ruby-version: "3.2.2"
           bundler-cache: true
-      - name: Change to backend directory
-        run: cd backend
       - name: Install postgres client dependencies
         run: sudo apt-get install libpq-dev
       - name: Create database
