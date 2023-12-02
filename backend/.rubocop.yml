@@ -1,0 +1,25 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'bin/*'
+    - 'db/*'
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 150
+Metrics/MethodLength:
+  Max: 30
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Max: 100
+Metrics/ClassLength:
+  Max: 150
+Metrics/MissingSuper:
+  Enabled: false
+
+inherit_mode:
+  merge:
+    - Exclude
