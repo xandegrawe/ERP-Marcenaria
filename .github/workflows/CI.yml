@@ -51,6 +51,10 @@ jobs:
         run: sudo apt-get install libpq-dev
         working-directory: ./backend
         
+      - name: instalando o bundler
+        run: gem install bundler
+        working-directory: ./backend
+        
       - name: Criação do banco de dados
         run: |
           bundle exec rails db:create
