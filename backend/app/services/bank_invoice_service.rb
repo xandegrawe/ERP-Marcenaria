@@ -41,9 +41,16 @@ class BankInvoiceService < ApplicationController
     formatted_balance = format('%.2f', balance.to_f)
     formatted_balance.gsub!('.', ',')
     inteiro, decimal = formatted_balance.split(',')
+
+    negative = inteiro.include?("-")
+    inteiro = inteiro.delete("-")
+
     partes = inteiro.chars.to_a.reverse.each_slice(3).map(&:join)
     inteiro = partes.map(&:reverse).reverse.join('.')
-    [inteiro, decimal].join(',')
+    formatted_number = [inteiro, decimal].join(',')
+    formatted_number = "- " + formatted_number if negative
+    
+    formatted_number
   end
 
   def show(bank_invoice_id)
