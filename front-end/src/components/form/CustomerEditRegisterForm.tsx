@@ -21,7 +21,6 @@ export default function CustomerEditRegisterForm({ initialValues, onClose }: For
         let customer = customerData.data.customer;
         let person = customerData.data.person;
         let customer_address = customerData.data.address;
-        debugger
         setValue('name', person.name);
         setValue('email', person.email);
         setValue('phone', formatPhone(person?.phone));

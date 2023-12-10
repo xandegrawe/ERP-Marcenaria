@@ -23,7 +23,7 @@ interface AccountSummary {
 }
 
 const SubNavbar = () => {
-  const { bankAccounts, deleteBankAccount, selectAccount } = useContext(GlobalContext);
+  const { bankAccounts, deleteBankAccount, selectAccount, invoices } = useContext(GlobalContext);
   const toast = useToast();
   let panelBg = useColorModeValue('#E8F5E9', 'gray.700');
   let boxBg = useColorModeValue('white', 'gray.800');
@@ -34,7 +34,7 @@ const SubNavbar = () => {
     bankAccounts.forEach((account: { id: number; }) => {
       fetchCalculateInvoices(account.id);
     });
-  }, [bankAccounts]);
+  }, [bankAccounts, invoices]);
 
   const handleTabChange = (accountId: number) => {
     selectAccount(accountId);
