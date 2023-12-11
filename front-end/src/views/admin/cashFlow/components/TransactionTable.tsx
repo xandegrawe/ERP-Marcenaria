@@ -41,6 +41,17 @@ const TransactionsTable = () => {
     return `${day} de ${month} de ${year} as ${hours}:${minutes}`;
   };
 
+  const sortInvoicesByDate = (invoices: Partial<BankInvoice>[]) => {
+    return [...invoices].sort((a, b) => {
+      const dateA = new Date(a.created_at);
+      const dateB = new Date(b.created_at);
+      return dateB.getTime() - dateA.getTime();
+    });
+  };
+
+  const newInvoicesSorted = useMemo(() => sortInvoicesByDate(newInvoices), [newInvoices]);
+  const oldInvoicesSorted = useMemo(() => sortInvoicesByDate(oldInvoices), [oldInvoices]);
+
   return (
     <SimpleGrid columns={1} spacing={{ base: '20px', xl: '20px' }}>
       <Flex 
@@ -73,7 +84,7 @@ const TransactionsTable = () => {
         >
           Novas
         </Text>
-        {newInvoices.map((row: Partial<BankInvoice>) => {
+        {newInvoicesSorted.map((row: Partial<BankInvoice>) => {
         return (
           <TransactionRow
             id = {row.id}
@@ -95,7 +106,7 @@ const TransactionsTable = () => {
         >
           Antigas
         </Text>
-        {oldInvoices.map((row: Partial<BankInvoice>) => {
+        {oldInvoicesSorted.map((row: Partial<BankInvoice>) => {
         return (
           <TransactionRow
             id = {row.id}
